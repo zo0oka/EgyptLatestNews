@@ -18,13 +18,9 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Category;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Feed;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Website;
-
-import java.util.List;
-
 @Database(entities = {Article.class, Category.class, Feed.class, Website.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class FeedRoomDatabase extends RoomDatabase {
-
     private static volatile FeedRoomDatabase INSTANCE;
     private static final RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
@@ -32,14 +28,20 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
             super.onCreate(db);
             new PopulateDbAsync(INSTANCE).execute();
         }
-
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-            new SyncDbAsync(INSTANCE).execute();
-        }
+//        @Override
+//        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+//            super.onOpen(db);
+//            new SyncDBAsync(INSTANCE).execute();
+//        }
     };
 
+    public abstract ArticleDao articleDao();
+
+    public abstract CategoryDao categoryDao();
+
+    public abstract FeedDao feedDao();
+
+    public abstract WebsiteDao websiteDao();
     public static FeedRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (FeedRoomDatabase.class) {
@@ -54,29 +56,22 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
-
     public static void destroyInstance() {
         INSTANCE = null;
     }
-
-    public abstract ArticleDao articleDao();
-
-    public abstract CategoryDao categoryDao();
-
-    public abstract FeedDao feedDao();
-
-    public abstract WebsiteDao websiteDao();
 
     public static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final CategoryDao categoryDao;
         private final FeedDao feedDao;
         private final WebsiteDao websiteDao;
+        private final ArticleDao articleDao;
 
         PopulateDbAsync(FeedRoomDatabase db) {
             categoryDao = db.categoryDao();
             feedDao = db.feedDao();
             websiteDao = db.websiteDao();
+            articleDao = db.articleDao();
         }
 
         @Override
@@ -89,27 +84,35 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
             }
             for (Feed feed : DBStartupData.feeds) {
                 feedDao.insertFeed(feed);
+                for (Article article : SaxXmlParser.parse(feed.getFeedRssLink())) {
+                    articleDao.insertArticle(new Article(
+                            article.getArticleTitle(),
+                            article.getArticleLink(),
+                            article.getArticleDescription(),
+                            article.getArticlePubDate(),
+                            article.getArticleThumbnailUrl(),
+                            feed.getWebsiteName(),
+                            feed.getCategoryName(),
+                            false
+                    ));
+                }
             }
             return null;
         }
     }
 
-    public static class SyncDbAsync extends AsyncTask<Void, Void, Void> {
+    public static class SyncDBAsync extends AsyncTask<Void, Void, Void> {
+        private final FeedDao feedDao;
+        private final ArticleDao articleDao;
 
-        private FeedDao feedDao;
-        private ArticleDao articleDao;
-
-        SyncDbAsync(FeedRoomDatabase db) {
-            this.articleDao = db.articleDao();
-            this.feedDao = db.feedDao();
+        SyncDBAsync(FeedRoomDatabase db) {
+            feedDao = db.feedDao();
+            articleDao = db.articleDao();
         }
-
         @Override
         protected Void doInBackground(Void... voids) {
-            List<Feed> feeds = feedDao.getAllFeeds();
-            for (Feed feed : feeds) {
-                List<Article> articles = SaxXmlParser.parse(feed.getFeedRssLink());
-                for (Article article : articles) {
+            for (Feed feed : feedDao.getAllFeeds()) {
+                for (Article article : SaxXmlParser.parse(feed.getFeedRssLink())) {
                     articleDao.insertArticle(new Article(
                             article.getArticleTitle(),
                             article.getArticleLink(),
