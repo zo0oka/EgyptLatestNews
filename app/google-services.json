@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "1669737762",
+    "firebase_url": "https://egypt-latest-news.firebaseio.com",
+    "project_id": "egypt-latest-news",
+    "storage_bucket": "egypt-latest-news.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1669737762:android:444d19c19a4fb4ad",
+        "android_client_info": {
+          "package_name": "com.zookanews.egyptlatestnews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1669737762-dv28k28sujpini954dr8t4cfovt8rgv8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zookanews.egyptlatestnews",
+            "certificate_hash": "6e28182b8f28474741c727af5e88218361fe28a0"
+          }
+        },
+        {
+          "client_id": "1669737762-vl2fe020d0rl95n42abtaa79kv8rffn7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6mGSwo2OllXfpnUUFJSz-RCo-fJBcaOM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1669737762-vl2fe020d0rl95n42abtaa79kv8rffn7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-4040319527918836~7183078616"
+    }
+  ],
+  "configuration_version": "1"
+}

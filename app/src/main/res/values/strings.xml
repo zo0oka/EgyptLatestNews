@@ -1,0 +1,98 @@
+<resources>
+    <string name="app_name">Egypt Latest News</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="view_article_on_website">قرأة الموضوع كاملا</string>
+    <string name="search">Search</string>
+    <string name="hide_read">Hide read</string>
+    <string name="mark_all_read">Mark all read</string>
+    <string name="delete_all">Delete all</string>
+    <string name="delete_all_read">Delete all read</string>
+    <string name="sort_by">Sort by</string>
+    <string name="switch_layout">Switch layout</string>
+    <string name="search_hint">Search Now</string>
+    <string name="nav_main_menu">الرئيسية</string>
+    <string name="nav_latest_news">أخر الأخبار</string>
+    <string name="nav_politics">الأخبار السياسية</string>
+    <string name="nav_accidents">حوادث وقضايا</string>
+    <string name="nav_finance">إقتصاد وبنوك</string>
+    <string name="nav_sports">أخبار الرياضة</string>
+    <string name="nav_woman">عالم المرأة والمنوعات</string>
+    <string name="nav_arts">أخبار الفن</string>
+    <string name="nav_technology">علوم وتكنولوجيا</string>
+    <string name="nav_videos">فيديوهات</string>
+    <string name="nav_automotive">عالم السيارات</string>
+    <string name="nav_investigations">تحقيقات وحوارات</string>
+    <string name="nav_culture">الثقافة</string>
+    <string name="nav_travel">سياحة وطيران</string>
+    <string name="nav_health">الصحة والجمال</string>
+    <string name="nav_sections">الأقسام الفرعية</string>
+    <string name="nav_almasry_alyoum">المصرى اليوم</string>
+    <string name="nav_alwatan">الوطن</string>
+    <string name="nav_aldostour">الدستور</string>
+    <string name="nav_akhbarak">أخبارك</string>
+    <string name="nav_alwafd">الوفد</string>
+    <string name="nav_bbc_arabic">BBC</string>
+    <string name="nav_alfagr">بوابة الفجر الإلكترونية</string>
+    <string name="nav_rose_alyousef">جريدة روز اليوسف</string>
+    <string name="nav_akhbar_elhawadeth">أخبار الحوادث</string>
+    <string name="nav_sada_elbalad">صدى البلد</string>
+    <string name="nav_bawabet_veto">بوابة فيتو</string>
+    <string name="nav_almogaz">الموجز</string>
+    <string name="nav_app_rating">تقييم البرنامج</string>
+    <string name="nav_app_rate">قيم البرنامج</string>
+    <string name="nav_tools">الأدوات</string>
+    <string name="nav_add_source">إضافة المصادر</string>
+    <string name="nav_sync_news">تحديق الأخبار</string>
+    <string name="nav_settings">الإعدادات</string>
+    <string name="nav_privacy_policy">سياسة الخصوصية</string>
+
+    <string name="article_detail">Article Detail</string>
+    <string name="article_webView">Article WebView</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="pref_header_synchronization">Synchronization</string>
+    <string name="pref_header_display_presentation">Display and Presentation</string>
+    <string name="pref_header_message_storage">Message Storage</string>
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_header_other">Other</string>
+    <string name="pref_key_automatic_background_sync" translatable="false">automatic_background_sync</string>
+    <string name="pref_title_automatic_background_sync">Automatic background sync</string>
+    <string name="pref_key_sync_frequency" translatable="false">sync_frequency</string>
+    <string name="pref_key_sync_on_startup" translatable="false">sync_on_startup</string>
+    <string name="pref_title_sync_on_startup">Sync on startup</string>
+    <string name="pref_key_wifi_only_for_image" translatable="false">wifi_only_for_images</string>
+    <string name="pref_title_wifi_only_for_image">Wi-Fi only for image</string>
+    <string name="pref_summary_wifi_only_for_image">Sync article image only when Wi-Fi is connected</string>
+    <string name="pref_key_wifi_only_for_download" translatable="false">wifi_only_for_download</string>
+    <string name="pref_title_wifi_only_for_download">Wi-Fi only for syncing</string>
+    <string name="pref_summary_wifi_only_for_download">Sync news only when Wi-Fi is connected</string>
+    <string name="pref_key_keep_unread_articles" translatable="false">keep_unread_articles</string>
+    <string name="pref_title_keep_unread_articles">Keep unread articles</string>
+    <string name="pref_key_auto_cleanup_read" translatable="false">auto_cleanup_read</string>
+    <string name="pref_title_auto_cleanup_read">Auto cleanup read</string>
+    <string name="pref_summary_auto_cleanup_read">Auto cleanup unread articles older than selected days</string>
+    <string name="pref_key_auto_cleanup_unread" translatable="false">auto_cleanup_unread</string>
+    <string name="pref_title_auto_cleanup_unread">Auto cleanup unread</string>
+    <string name="pref_summary_auto_cleanup_unread">Auto cleanup unread articles older than selected days</string>
+    <string name="pref_title_new_article_notifications">New article notifications</string>
+    <string name="pref_key_new_article_notifications" translatable="false">new_article_notifications</string>
+    <string name="pref_summary_new_article_notifications">Enable notifications for automatic sync</string>
+    <string name="pref_key_vibrate" translatable="false">vibrate</string>
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_summary_vibrate">Vibrate for new articles notification</string>
+    <string name="pref_key_light" translatable="false">light</string>
+    <string name="pref_title_light">Light</string>
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string name="article_thumbnail">Article thumbnail</string>
+    <string name="pref_title_feedback">Feedback</string>
+    <string name="pref_title_help">Help</string>
+    <string name="pref_title_privacy_policy">Privacy Policy</string>
+    <string name="pref_title_about">About</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_sync">Sync</string>
+
+</resources>

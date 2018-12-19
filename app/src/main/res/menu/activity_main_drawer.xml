@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:title="@string/nav_main_menu">
+            <menu>
+                <item
+                    android:id="@+id/nav_latest_news"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_latest_news" />
+                <item
+                    android:id="@+id/nav_politics"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_politics" />
+                <item
+                    android:id="@+id/nav_accidents"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_accidents" />
+                <item
+                    android:id="@+id/nav_finance"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_finance" />
+                <item
+                    android:id="@+id/nav_sports"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_sports" />
+                <item
+                    android:id="@+id/nav_woman"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_woman" />
+                <item
+                    android:id="@+id/nav_arts"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_arts" />
+                <item
+                    android:id="@+id/nav_technology"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_technology" />
+                <item
+                    android:id="@+id/nav_videos"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_videos" />
+                <item
+                    android:id="@+id/nav_automotive"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_automotive" />
+                <item
+                    android:id="@+id/nav_investigations"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_investigations" />
+                <item
+                    android:id="@+id/nav_culture"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_culture" />
+                <item
+                    android:id="@+id/nav_travel"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_travel" />
+                <item
+                    android:id="@+id/nav_health"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_health" />
+
+            </menu>
+        </item>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="@string/nav_sections">
+            <menu>
+                <item
+                    android:id="@+id/nav_almasry_alyoum"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_almasry_alyoum" />
+                <item
+                    android:id="@+id/nav_alwatan"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_alwatan" />
+                <item
+                    android:id="@+id/nav_aldostour"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_aldostour" />
+                <item
+                    android:id="@+id/nav_akhbarak"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_akhbarak" />
+                <item
+                    android:id="@+id/nav_alwafd"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_alwafd" />
+                <item
+                    android:id="@+id/nav_bbc_arabic"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_bbc_arabic" />
+                <item
+                    android:id="@+id/nav_alfagr"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_alfagr" />
+                <item
+                    android:id="@+id/nav_rose_alyousef"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_rose_alyousef" />
+                <item
+                    android:id="@+id/nav_akhbar_elhawadeth"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_akhbar_elhawadeth" />
+                <item
+                    android:id="@+id/nav_sada_elbalad"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_sada_elbalad" />
+                <item
+                    android:id="@+id/nav_bawabet_veto"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_bawabet_veto" />
+                <item
+                    android:id="@+id/nav_almogaz"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/nav_almogaz" />
+            </menu>
+        </item>
+    </group>
+    <item android:title="@string/nav_app_rating">
+        <menu>
+            <item
+                android:id="@+id/nav_app_rate"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/nav_app_rate" />
+        </menu>
+    </item>
+    <item android:title="@string/nav_tools">
+        <menu>
+            <item
+                android:id="@+id/nav_add_source"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/nav_add_source" />
+            <item
+                android:id="@+id/nav_sync_news"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/nav_sync_news" />
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/nav_settings" />
+            <item
+                android:id="@+id/nav_privacy_policy"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/nav_privacy_policy" />
+        </menu>
+    </item>
+
+</menu>

@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Feed;
 import com.zookanews.egyptlatestnews.RoomDB.Repositories.FeedRepository;
 
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 public class FeedViewModel extends AndroidViewModel {
 
     private final FeedRepository feedRepository;
@@ -18,5 +21,9 @@ public class FeedViewModel extends AndroidViewModel {
 
     public void insertFeed(Feed feed) {
         feedRepository.insertFeed(feed);
+    }
+
+    public List<Feed> getAllFeeds() throws ExecutionException, InterruptedException {
+        return feedRepository.getAllFeeds();
     }
 }

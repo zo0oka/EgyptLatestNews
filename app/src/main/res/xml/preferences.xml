@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_header_synchronization">
+
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/pref_auto_cleanup_read_titles"
+            android:entryValues="@array/pref_auto_cleanup_read_values"
+            android:key="@string/pref_key_auto_cleanup_read"
+            android:persistent="true"
+            android:summary="@string/pref_summary_auto_cleanup_read"
+            android:title="@string/pref_title_auto_cleanup_read" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_automatic_background_sync"
+            android:persistent="true"
+            android:title="@string/pref_title_automatic_background_sync" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/pref_sync_frequency_titles"
+            android:entryValues="@array/pref_sync_frequency_values"
+            android:key="@string/pref_key_sync_frequency"
+            android:persistent="true"
+            android:title="@string/pref_title_sync_frequency" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_sync_on_startup"
+            android:persistent="true"
+            android:title="@string/pref_title_sync_on_startup" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_wifi_only_for_download"
+            android:persistent="true"
+            android:summary="@string/pref_summary_wifi_only_for_download"
+            android:title="@string/pref_title_wifi_only_for_download" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_message_storage">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/pref_key_keep_unread_articles"
+            android:persistent="true"
+            android:title="@string/pref_title_keep_unread_articles" />
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/pref_auto_cleanup_unread_titles"
+            android:entryValues="@array/pref_auto_cleanup_unread_values"
+            android:key="@string/pref_key_auto_cleanup_unread"
+            android:persistent="true"
+            android:summary="@string/pref_summary_auto_cleanup_unread"
+            android:title="@string/pref_title_auto_cleanup_unread" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_notifications">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_new_article_notifications"
+            android:persistent="true"
+            android:summary="@string/pref_summary_new_article_notifications"
+            android:title="@string/pref_title_new_article_notifications" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_vibrate"
+            android:persistent="true"
+            android:summary="@string/pref_summary_vibrate"
+            android:title="@string/pref_title_vibrate" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_light"
+            android:persistent="true"
+            android:title="@string/pref_title_light" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_header_other">
+        <Preference android:title="@string/pref_title_feedback"></Preference>
+        <Preference android:title="@string/pref_title_help"></Preference>
+        <Preference android:title="@string/pref_title_privacy_policy"></Preference>
+        <Preference android:title="@string/pref_title_about"></Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

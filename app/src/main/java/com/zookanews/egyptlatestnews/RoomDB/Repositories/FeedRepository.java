@@ -22,22 +22,38 @@ public class FeedRepository {
 
     @SuppressLint("StaticFieldLeak")
     public void insertFeed(Feed feed) {
-        new AsyncTask<Feed, Void, Void>() {
-            @Override
-            protected Void doInBackground(Feed... feeds) {
-                feedDao.insertFeed(feeds[0]);
-                return null;
-            }
-        }.execute(feed);
+        new insertFeedAsyncTask(feedDao).execute(feed);
     }
 
     @SuppressLint("StaticFieldLeak")
     public List<Feed> getAllFeeds() throws ExecutionException, InterruptedException {
-        return new AsyncTask<Void, Void, List<Feed>>() {
-            @Override
-            protected List<Feed> doInBackground(Void... voids) {
-                return feedDao.getAllFeeds();
-            }
-        }.execute().get();
+        return new getAllFeedsAsyncTask(feedDao).execute().get();
+    }
+
+    private static class insertFeedAsyncTask extends AsyncTask<Feed, Void, Void> {
+        private FeedDao asyncTaskDao;
+
+        insertFeedAsyncTask(FeedDao feedDao) {
+            asyncTaskDao = feedDao;
+        }
+
+        @Override
+        protected Void doInBackground(Feed... feeds) {
+            asyncTaskDao.insertFeed(feeds[0]);
+            return null;
+        }
+    }
+
+    private static class getAllFeedsAsyncTask extends AsyncTask<Void, Void, List<Feed>> {
+        private FeedDao asyncTaskDao;
+
+        getAllFeedsAsyncTask(FeedDao feedDao) {
+            asyncTaskDao = feedDao;
+        }
+
+        @Override
+        protected List<Feed> doInBackground(Void... voids) {
+            return asyncTaskDao.getAllFeeds();
+        }
     }
 }
