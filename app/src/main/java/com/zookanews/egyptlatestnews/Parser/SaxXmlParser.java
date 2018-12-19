@@ -16,13 +16,9 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
-
 public class SaxXmlParser {
-
     public static List<Article> parse(String urlString) {
-
         List<Article> articles = null;
-
         try {
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
