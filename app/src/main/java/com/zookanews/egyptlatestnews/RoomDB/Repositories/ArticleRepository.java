@@ -22,8 +22,8 @@ public class ArticleRepository {
         allArticles = articleDao.getAllArticles();
     }
 
-    public void insertArticle(Article article) {
-        new insertArticleAsyncTask(articleDao).execute(article);
+    public long insertArticle(Article article) throws ExecutionException, InterruptedException {
+        return new insertArticleAsyncTask(articleDao).execute(article).get();
     }
 
     public LiveData<List<Article>> getAllArticles() {
@@ -59,6 +59,10 @@ public class ArticleRepository {
         new updateReadStatusAsyncTask(articleDao).execute(params);
     }
 
+    public void setAllAsRead() {
+        new setAllAsReadAsyncTask(articleDao).execute();
+    }
+
     public Article getArticleById(int articleId) throws ExecutionException, InterruptedException {
         Params params = new Params(articleId);
         return new getArticleByIdAsyncTask(articleDao).execute(params).get();
@@ -72,7 +76,7 @@ public class ArticleRepository {
         return new getReadArticlesAsyncTask(articleDao).execute().get();
     }
 
-    private static class insertArticleAsyncTask extends AsyncTask<Article, Void, Void> {
+    private static class insertArticleAsyncTask extends AsyncTask<Article, Void, Long> {
         private ArticleDao asyncTaskDao;
 
         insertArticleAsyncTask(ArticleDao articleDao) {
@@ -80,9 +84,9 @@ public class ArticleRepository {
         }
 
         @Override
-        protected Void doInBackground(Article... articles) {
-            asyncTaskDao.insertArticle(articles[0]);
-            return null;
+        protected Long doInBackground(Article... articles) {
+            return asyncTaskDao.insertArticle(articles[0]);
+
         }
     }
 
@@ -217,6 +221,20 @@ public class ArticleRepository {
         @Override
         protected List<Article> doInBackground(Void... voids) {
             return asyncTaskDao.getReadArticles();
+        }
+    }
+
+    private static class setAllAsReadAsyncTask extends AsyncTask<Void, Void, Void> {
+        private ArticleDao asyncTaskDao;
+
+        setAllAsReadAsyncTask(ArticleDao articleDao) {
+            asyncTaskDao = articleDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            asyncTaskDao.setAllAsRead();
+            return null;
         }
     }
 }

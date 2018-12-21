@@ -5,6 +5,7 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Feed;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Website;
 
 import java.util.ArrayList;
+
 class DBStartupData {
     static final ArrayList<Category> categories = new ArrayList<Category>() {
         {

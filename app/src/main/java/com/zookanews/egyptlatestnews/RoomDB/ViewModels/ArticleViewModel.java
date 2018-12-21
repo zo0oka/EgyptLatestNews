@@ -26,8 +26,8 @@ public class ArticleViewModel extends AndroidViewModel {
         return allArticles;
     }
 
-    public void insertArticle(Article article) {
-        articleRepository.insertArticle(article);
+    public long insertArticle(Article article) throws ExecutionException, InterruptedException {
+        return articleRepository.insertArticle(article);
     }
 
     public List<Article> getCategoryArticles(String categoryName) throws ExecutionException, InterruptedException {
@@ -36,6 +36,10 @@ public class ArticleViewModel extends AndroidViewModel {
 
     public List<Article> getWebsiteArticles(String websiteName) throws ExecutionException, InterruptedException {
         return articleRepository.getWebsiteArticles(websiteName);
+    }
+
+    public void setAllAsRead() {
+        articleRepository.setAllAsRead();
     }
 
     public List<Article> getUnreadArticles() throws ExecutionException, InterruptedException {

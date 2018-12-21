@@ -13,7 +13,7 @@
     <string name="delete_all_read">Delete all read</string>
     <string name="sort_by">Sort by</string>
     <string name="switch_layout">Switch layout</string>
-    <string name="search_hint">Search Now</string>
+    <string name="search_hint">Search…</string>
     <string name="nav_main_menu">الرئيسية</string>
     <string name="nav_latest_news">أخر الأخبار</string>
     <string name="nav_politics">الأخبار السياسية</string>
@@ -59,32 +59,21 @@
     <string name="pref_header_message_storage">Message Storage</string>
     <string name="pref_header_notifications">Notifications</string>
     <string name="pref_header_other">Other</string>
-    <string name="pref_key_automatic_background_sync" translatable="false">automatic_background_sync</string>
     <string name="pref_title_automatic_background_sync">Automatic background sync</string>
-    <string name="pref_key_sync_frequency" translatable="false">sync_frequency</string>
-    <string name="pref_key_sync_on_startup" translatable="false">sync_on_startup</string>
     <string name="pref_title_sync_on_startup">Sync on startup</string>
-    <string name="pref_key_wifi_only_for_image" translatable="false">wifi_only_for_images</string>
     <string name="pref_title_wifi_only_for_image">Wi-Fi only for image</string>
     <string name="pref_summary_wifi_only_for_image">Sync article image only when Wi-Fi is connected</string>
-    <string name="pref_key_wifi_only_for_download" translatable="false">wifi_only_for_download</string>
     <string name="pref_title_wifi_only_for_download">Wi-Fi only for syncing</string>
     <string name="pref_summary_wifi_only_for_download">Sync news only when Wi-Fi is connected</string>
-    <string name="pref_key_keep_unread_articles" translatable="false">keep_unread_articles</string>
     <string name="pref_title_keep_unread_articles">Keep unread articles</string>
-    <string name="pref_key_auto_cleanup_read" translatable="false">auto_cleanup_read</string>
     <string name="pref_title_auto_cleanup_read">Auto cleanup read</string>
     <string name="pref_summary_auto_cleanup_read">Auto cleanup unread articles older than selected days</string>
-    <string name="pref_key_auto_cleanup_unread" translatable="false">auto_cleanup_unread</string>
     <string name="pref_title_auto_cleanup_unread">Auto cleanup unread</string>
     <string name="pref_summary_auto_cleanup_unread">Auto cleanup unread articles older than selected days</string>
     <string name="pref_title_new_article_notifications">New article notifications</string>
-    <string name="pref_key_new_article_notifications" translatable="false">new_article_notifications</string>
     <string name="pref_summary_new_article_notifications">Enable notifications for automatic sync</string>
-    <string name="pref_key_vibrate" translatable="false">vibrate</string>
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_summary_vibrate">Vibrate for new articles notification</string>
-    <string name="pref_key_light" translatable="false">light</string>
     <string name="pref_title_light">Light</string>
     <string name="pref_title_sync_frequency">Sync frequency</string>
     <string name="article_thumbnail">Article thumbnail</string>

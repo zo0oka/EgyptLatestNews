@@ -2,8 +2,10 @@ package com.zookanews.egyptlatestnews.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +40,12 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     public void onBindViewHolder(@NonNull final ArticlesAdapter.ArticlesViewHolder articlesViewHolder, int position) {
         final Article article = articles.get(position);
         articlesViewHolder.title.setText(article.getArticleTitle());
-        articlesViewHolder.description.setText(article.getArticleDescription());
+        if (article.getIsRead()) {
+            articlesViewHolder.title.setTextColor(Color.LTGRAY);
+        } else {
+            articlesViewHolder.title.setTextColor(Color.RED);
+        }
+        articlesViewHolder.description.setText(Html.fromHtml(article.getArticleDescription()));
         articlesViewHolder.pubDate.setText(DateUtils.getRelativeTimeSpanString(DateConverter.toTimestamp(article.getArticlePubDate()),
                 System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS));
         if (article.getArticleThumbnailUrl() != null) {
@@ -46,8 +53,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         } else {
             articlesViewHolder.thumb.setImageResource(R.drawable.thumb_placeholder);
         }
-        articlesViewHolder.category.setText(article.getCategoryName());
-        articlesViewHolder.website.setText(article.getWebsiteName());
         articlesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +63,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         });
     }
 
-    public void setArticles(List<Article> articles) {
+    void setArticles(List<Article> articles) {
         this.articles = articles;
         notifyDataSetChanged();
     }
@@ -75,8 +80,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         private final TextView title;
         private TextView description;
         private TextView pubDate;
-        private TextView category;
-        private TextView website;
         private ImageView thumb;
 
         ArticlesViewHolder(@NonNull View itemView) {
@@ -85,8 +88,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
             description = itemView.findViewById(R.id.description_textView);
             thumb = itemView.findViewById(R.id.article_imageView);
             pubDate = itemView.findViewById(R.id.pubDate_textView);
-            category = itemView.findViewById(R.id.category_textView);
-            website = itemView.findViewById(R.id.website_textView);
         }
     }
 }

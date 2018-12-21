@@ -1,4 +1,4 @@
-package com.zookanews.egyptlatestnews;
+package com.zookanews.egyptlatestnews.UpdateService;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -12,9 +12,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.zookanews.egyptlatestnews.Parser.SaxXmlParser;
+import com.zookanews.egyptlatestnews.R;
 import com.zookanews.egyptlatestnews.RoomDB.DAO.ArticleDao;
 import com.zookanews.egyptlatestnews.RoomDB.DAO.FeedDao;
 import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
@@ -37,24 +39,30 @@ public class DbUpdateService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         showToast("Sync started");
         startForeground(1, createNotification());
-        List<Article> articles = new ArrayList<>();
+        List<Article> articles;
         List<Long> ids = new ArrayList<>();
         ArticleDao articleDao = FeedRoomDatabase.getDatabase(getApplicationContext()).articleDao();
         FeedDao feedDao = FeedRoomDatabase.getDatabase(getApplicationContext()).feedDao();
-        for (Feed feed : feedDao.getAllFeeds()) {
-            for (Article article : SaxXmlParser.parse(feed.getFeedRssLink())) {
-                ids.add(articleDao.insertArticle(new Article(
-                        article.getArticleTitle(),
-                        article.getArticleLink(),
-                        article.getArticleDescription(),
-                        article.getArticlePubDate(),
-                        article.getArticleThumbnailUrl(),
-                        feed.getWebsiteName(),
-                        feed.getCategoryName(),
-                        false)));
+        List<Feed> feeds = new ArrayList<>(feedDao.getAllFeeds());
+        Log.d("SERVICE", String.valueOf(feeds.size()));
+        for (Feed feed : feeds) {
+//                articles.clear();
+            articles = SaxXmlParser.parse(feed.getFeedRssLink());
+            if (articles != null) {
+                for (Article article : articles) {
+                    long id = articleDao.insertArticle(new Article(
+                            article.getArticleTitle(),
+                            article.getArticleLink(),
+                            article.getArticleDescription(),
+                            article.getArticlePubDate(),
+                            article.getArticleThumbnailUrl(),
+                            feed.getWebsiteName(),
+                            feed.getCategoryName(),
+                            false));
+                    ids.add(id);
+                }
             }
         }
-
         showToast(ids.size() + " new articles");
         ids.clear();
         stopForeground(true);

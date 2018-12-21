@@ -9,9 +9,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 
 import com.zookanews.egyptlatestnews.Parser.SaxXmlParser;
 import com.zookanews.egyptlatestnews.R;
@@ -22,18 +23,21 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Feed;
 import com.zookanews.egyptlatestnews.UI.MainActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import static com.zookanews.egyptlatestnews.Helpers.Constants.LIGHT;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.NEW_ARTICLE_NOTIFICATION;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.VIBRATE;
+
 public class DBSyncWorker extends Worker {
 
     private static final int CHANNEL_ID = 1;
-    private static final String FIRST_RUN = "is_first_run";
+    private List<Article> articles = new ArrayList<>();
     private SharedPreferences sharedPreferences;
-    private List<Article> articles;
-
 
     public DBSyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -43,38 +47,50 @@ public class DBSyncWorker extends Worker {
     @Override
     public Result doWork() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Boolean isNotification = sharedPreferences.getBoolean(String.valueOf(R.string.pref_key_new_article_notifications), true);
-
+        Boolean notifications = sharedPreferences.getBoolean(NEW_ARTICLE_NOTIFICATION, true);
         updateDB();
-        if (isNotification) {
+        if (notifications) {
             sendNotification();
         }
         return Result.success();
     }
 
     private void sendNotification() {
-        Boolean vibrate = sharedPreferences.getBoolean(String.valueOf(R.string.pref_key_vibrate), true);
-        Boolean light = sharedPreferences.getBoolean(String.valueOf(R.string.pref_key_light), true);
+        Boolean light = sharedPreferences.getBoolean(LIGHT, true);
+        Boolean vibrate = sharedPreferences.getBoolean(VIBRATE, true);
+
         Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        } else {
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+
         PendingIntent notificationPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                 1, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationManager notificationManager = (NotificationManager) getApplicationContext()
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
+        assert notificationManager != null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                notificationManager.getNotificationChannel("egyptlatestnews") == null) {
             NotificationChannel notificationChannel = (new NotificationChannel("egyptlatestnews", "Egypt Latest News",
                     NotificationManager.IMPORTANCE_DEFAULT));
-            notificationChannel.enableVibration(true);
-            notificationChannel.enableLights(true);
+            notificationChannel.enableVibration(vibrate);
+            notificationChannel.enableLights(light);
             notificationChannel.setDescription("Egypt Latest News Notification Channel");
             notificationChannel.setLightColor(Color.WHITE);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
+            notificationManager.createNotificationChannel(notificationChannel);
         }
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), "egyptlatestnews");
+
+        NotificationCompat.Builder notificationBuilder;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationBuilder = new NotificationCompat.Builder(getApplicationContext(), "egyptlatestnews");
+        } else {
+            notificationBuilder = new NotificationCompat.Builder(getApplicationContext());
+        }
         notificationBuilder.setLights(Color.WHITE, 500, 2000);
         notificationBuilder.setDefaults(NotificationCompat.DEFAULT_ALL);
         notificationBuilder.setContentTitle("New Articles");
@@ -84,6 +100,7 @@ public class DBSyncWorker extends Worker {
         notificationBuilder.setAutoCancel(true);
         notificationBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificationBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        assert articles != null;
         notificationBuilder.setStyle(new NotificationCompat.InboxStyle()
                 .addLine(articles.get(articles.size() - 1).getArticleTitle())
                 .addLine(articles.get(articles.size() - 2).getArticleTitle())
@@ -92,11 +109,7 @@ public class DBSyncWorker extends Worker {
         notificationBuilder.setTicker("New " + articles.size() + " articles to read!");
         Notification notification = notificationBuilder.build();
         notification.flags |= Notification.FLAG_SHOW_LIGHTS;
-
-
-        if (notificationManager != null) {
-            notificationManager.notify(CHANNEL_ID, notification);
-        }
+        notificationManager.notify(CHANNEL_ID, notification);
     }
 
     private void updateDB() {
@@ -105,20 +118,26 @@ public class DBSyncWorker extends Worker {
         List<Feed> feeds = feedDao.getAllFeeds();
         if (feeds != null) {
             for (Feed feed : feeds) {
-                articles = SaxXmlParser.parse(feed.getFeedRssLink());
-                for (Article article : articles) {
-                    articleDao.insertArticle(new Article(
-                            article.getArticleTitle(),
-                            article.getArticleLink(),
-                            article.getArticleDescription(),
-                            article.getArticlePubDate(),
-                            article.getArticleThumbnailUrl(),
-                            feed.getWebsiteName(),
-                            feed.getCategoryName(),
-                            false
-                    ));
+                List<Article> feedArticles = SaxXmlParser.parse(feed.getFeedRssLink());
+                Log.d("DBSyncWorker", String.valueOf(feeds.size()));
+                if (feedArticles != null) {
+                    for (Article article : feedArticles) {
+                        articles.add(new Article(
+                                article.getArticleTitle(),
+                                article.getArticleLink(),
+                                article.getArticleDescription(),
+                                article.getArticlePubDate(),
+                                article.getArticleThumbnailUrl(),
+                                feed.getWebsiteName(),
+                                feed.getCategoryName(),
+                                false
+                        ));
+                    }
                 }
             }
+        }
+        for (Article article : articles) {
+            articleDao.insertArticle(article);
         }
     }
 }

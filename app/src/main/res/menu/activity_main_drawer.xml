@@ -8,19 +8,19 @@
             <menu>
                 <item
                     android:id="@+id/nav_latest_news"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_latest_news"
                     android:title="@string/nav_latest_news" />
                 <item
                     android:id="@+id/nav_politics"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_politics"
                     android:title="@string/nav_politics" />
                 <item
                     android:id="@+id/nav_accidents"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_accidents"
                     android:title="@string/nav_accidents" />
                 <item
                     android:id="@+id/nav_finance"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_finance"
                     android:title="@string/nav_finance" />
                 <item
                     android:id="@+id/nav_sports"

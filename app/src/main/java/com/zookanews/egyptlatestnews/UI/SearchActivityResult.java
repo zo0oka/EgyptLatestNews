@@ -18,21 +18,18 @@ import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class SearchActivityResult extends AppCompatActivity {
+import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 
-    private static final String ADMOB_APP_ID = "ca-app-pub-4040319527918836~7183078616";
-    private AdView mAdView;
+public class SearchActivityResult extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
-        Intent intent = getIntent();
-        handleIntent(intent);
+        handleIntent(getIntent());
 
-        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
         MobileAds.initialize(this, ADMOB_APP_ID);
-        mAdView = findViewById(R.id.search_result_adView);
+        AdView mAdView = findViewById(R.id.search_result_adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
@@ -40,7 +37,6 @@ public class SearchActivityResult extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        setIntent(intent);
         handleIntent(intent);
     }
 
@@ -60,12 +56,13 @@ public class SearchActivityResult extends AppCompatActivity {
     private void searchDB(String searchQuery) throws ExecutionException, InterruptedException {
         String searchText = "%" + searchQuery + "%";
         ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
-        List<Article> articles = articleViewModel.searchResultArticles(searchText);
+        List<Article> results = articleViewModel.searchResultArticles(searchText);
         RecyclerView recyclerView = findViewById(R.id.search_result_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         ArticlesAdapter articlesAdapter = new ArticlesAdapter(this);
+        articlesAdapter.setArticles(results);
         recyclerView.setAdapter(articlesAdapter);
-        articlesAdapter.setArticles(articles);
     }
+
 }

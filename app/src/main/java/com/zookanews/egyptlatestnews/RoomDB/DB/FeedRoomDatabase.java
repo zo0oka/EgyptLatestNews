@@ -18,6 +18,7 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Category;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Feed;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Website;
+
 @Database(entities = {Article.class, Category.class, Feed.class, Website.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class FeedRoomDatabase extends RoomDatabase {
@@ -35,13 +36,6 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
 //        }
     };
 
-    public abstract ArticleDao articleDao();
-
-    public abstract CategoryDao categoryDao();
-
-    public abstract FeedDao feedDao();
-
-    public abstract WebsiteDao websiteDao();
     public static FeedRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (FeedRoomDatabase.class) {
@@ -56,9 +50,18 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
     public static void destroyInstance() {
         INSTANCE = null;
     }
+
+    public abstract ArticleDao articleDao();
+
+    public abstract CategoryDao categoryDao();
+
+    public abstract FeedDao feedDao();
+
+    public abstract WebsiteDao websiteDao();
 
     public static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
@@ -109,6 +112,7 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
             feedDao = db.feedDao();
             articleDao = db.articleDao();
         }
+
         @Override
         protected Void doInBackground(Void... voids) {
             for (Feed feed : feedDao.getAllFeeds()) {

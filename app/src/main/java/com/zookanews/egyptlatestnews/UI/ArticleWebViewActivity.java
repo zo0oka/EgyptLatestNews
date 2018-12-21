@@ -12,7 +12,6 @@ import com.google.android.gms.ads.AdView;
 
 public class ArticleWebViewActivity extends AppCompatActivity {
 
-    private static final String ADMOB_APP_ID = "ca-app-pub-4040319527918836~7183078616";
     private WebView webView;
     private AdView mAdView;
 

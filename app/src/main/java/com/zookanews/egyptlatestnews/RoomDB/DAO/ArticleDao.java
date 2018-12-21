@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertArticle(Article article);
+    long insertArticle(Article article);
 
     @Query("SELECT * FROM articles_table ORDER BY ID DESC")
     LiveData<List<Article>> getAllArticles();
@@ -41,6 +41,9 @@ public interface ArticleDao {
 
     @Query("UPDATE articles_table SET isRead = :isRead WHERE ID = :articleId")
     void updateReadStatus(int articleId, Boolean isRead);
+
+    @Query("UPDATE articles_table SET isRead = 1")
+    void setAllAsRead();
 
     @Query("SELECT * FROM articles_table WHERE ID = :articleId")
     Article getArticleById(int articleId);
