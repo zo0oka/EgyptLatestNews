@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zookanews.egyptlatestnews.R;
-import com.zookanews.egyptlatestnews.RoomDB.DB.DateConverter;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticlesViewHolder> {
@@ -39,7 +39,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     @Override
     public void onBindViewHolder(@NonNull final ArticlesAdapter.ArticlesViewHolder articlesViewHolder, int position) {
         final Article article = articles.get(position);
-        articlesViewHolder.title.setText(article.getArticleTitle());
+        articlesViewHolder.title.setText(Html.fromHtml(article.getArticleTitle()));
         if (article.getIsRead()) {
             articlesViewHolder.title.setTextColor(Color.DKGRAY);
         } else {
@@ -47,8 +47,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         }
         articlesViewHolder.description.setText(Html.fromHtml(article.getArticleDescription()));
         articlesViewHolder.description.setTextColor(Color.DKGRAY);
-        articlesViewHolder.pubDate.setText(DateUtils.getRelativeTimeSpanString(DateConverter.toTimestamp(article.getArticlePubDate()),
-                System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS));
+        articlesViewHolder.pubDate.setText(DateUtils.getRelativeTimeSpanString(
+                article.getArticlePubDate().getTime(), Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS));
         articlesViewHolder.pubDate.setTextColor(Color.LTGRAY);
         if (article.getArticleThumbnailUrl() != null) {
             Picasso.get().load(article.getArticleThumbnailUrl()).into(articlesViewHolder.thumb);

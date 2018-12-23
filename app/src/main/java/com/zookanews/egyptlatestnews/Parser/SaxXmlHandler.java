@@ -1,5 +1,6 @@
 package com.zookanews.egyptlatestnews.Parser;
 
+import android.annotation.SuppressLint;
 import android.text.Html;
 import android.util.Log;
 
@@ -8,8 +9,11 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class SaxXmlHandler extends DefaultHandler {
@@ -18,6 +22,10 @@ public class SaxXmlHandler extends DefaultHandler {
     private Article article;
     private List<Article> articles;
     private String link, title, description, imgSrc, guid, enclosure, thumb_url, mediaThumbnail, articleLink, articleThumbnailUrl, imageUrl;
+    private String dateString;
+    private Date pubDate;
+    private Date articlePubDate;
+    private Calendar calendar;
 
     SaxXmlHandler() {
         articles = new ArrayList<>();
@@ -59,7 +67,13 @@ public class SaxXmlHandler extends DefaultHandler {
             } else if (imageUrl != null) {
                 articleThumbnailUrl = imageUrl;
             }
-            article = new Article(title, articleLink, description, Calendar.getInstance().getTime(), articleThumbnailUrl, null, null, false);
+            if (pubDate != null) {
+                articlePubDate = pubDate;
+            } else {
+                articlePubDate = Calendar.getInstance().getTime();
+            }
+
+            article = new Article(title, articleLink, description, articlePubDate, articleThumbnailUrl, null, null, false);
             articles.add(article);
         } else if (qName.equalsIgnoreCase("title")) {
             title = tempValue.toString();
@@ -78,7 +92,34 @@ public class SaxXmlHandler extends DefaultHandler {
             Log.d(TAG, "thumb_url = " + thumb_url);
         } else if (qName.equalsIgnoreCase("url")) {
             imageUrl = tempValue.toString();
+        } else if (qName.equalsIgnoreCase("pubDate")) {
+            dateString = tempValue.toString();
+            Log.d(TAG, "dateString = " + dateString);
+            try {
+                pubDate = getDateFromString(dateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Log.d(TAG, "pubDate = " + pubDate);
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private Date getDateFromString(String dateString) throws ParseException {
+        Date pubDate;
+        int lettersCount = dateString.length();
+        if (lettersCount == 29) {
+            pubDate = (new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z")).parse(dateString.replace("GMT", "EET"));
+        } else if (lettersCount == 19) {
+            pubDate = (new SimpleDateFormat("yyyy-MM-dd DD:mm:ss")).parse(dateString);
+        } else if (lettersCount == 31) {
+            pubDate = (new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z")).parse(dateString);
+        } else if (lettersCount == 26) {
+            pubDate = (new SimpleDateFormat("EEE , dd-MM-yyyy HH:mm:ss")).parse(dateString);
+        } else {
+            pubDate = (new SimpleDateFormat("EEE, MMM dd, yyyy - HH:mm")).parse(dateString);
+        }
+        return pubDate;
     }
 
     public void characters(char[] ch, int start, int length) {

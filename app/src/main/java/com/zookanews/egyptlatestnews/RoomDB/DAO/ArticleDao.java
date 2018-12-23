@@ -15,7 +15,7 @@ public interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     long insertArticle(Article article);
 
-    @Query("SELECT * FROM articles_table ORDER BY ID DESC")
+    @Query("SELECT * FROM articles_table ORDER BY date DESC")
     LiveData<List<Article>> getAllArticles();
 
     @Query("SELECT * FROM articles_table WHERE category_name = :categoryName ORDER BY ID DESC")
