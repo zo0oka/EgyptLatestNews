@@ -23,14 +23,18 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
     private static final String articleId = "articleId";
     private Article article;
+    private int receivedArticleId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
 
-        int receivedArticleId = getIntent().getExtras().getInt(articleId);
-
+        if (savedInstanceState != null) {
+            receivedArticleId = savedInstanceState.getInt("article_id");
+        } else {
+            receivedArticleId = getIntent().getExtras().getInt(articleId);
+        }
         ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
         try {
             article = articleViewModel.getArticleById(receivedArticleId);
@@ -58,6 +62,14 @@ public class ArticleDetailActivity extends AppCompatActivity {
         loadAd();
 
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("article_id", receivedArticleId);
+    }
+
+
 
     private void loadAd() {
         MobileAds.initialize(this, Constants.ADMOB_APP_ID);

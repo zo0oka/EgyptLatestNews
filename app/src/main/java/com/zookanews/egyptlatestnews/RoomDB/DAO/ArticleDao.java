@@ -24,8 +24,8 @@ public interface ArticleDao {
     @Query("SELECT * FROM articles_table WHERE website_name = :websiteName ORDER BY ID DESC")
     List<Article> getWebsiteArticles(String websiteName);
 
-    @Query("SELECT * FROM articles_table WHERE isRead = 0 ORDER BY ID DESC")
-    List<Article> getUnreadArticles();
+    @Query("SELECT * FROM articles_table WHERE isRead = :isRead ORDER BY ID DESC")
+    List<Article> getUnreadArticles(Boolean isRead);
 
     @Query("SELECT * FROM articles_table WHERE isRead = 1 ORDER BY ID DESC")
     List<Article> getReadArticles();

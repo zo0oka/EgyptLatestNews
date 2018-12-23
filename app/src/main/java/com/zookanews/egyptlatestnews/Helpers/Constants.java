@@ -12,4 +12,8 @@ public class Constants {
     public static final String VIBRATE = "pref_key_vibrate";
     public static final String LIGHT = "pref_key_light";
     public static final String ADMOB_APP_ID = "ca-app-pub-4040319527918836~7183078616";
+    public static final String NOTIFICATION_CHANNEL_ID = "com.zookanews.egyptlatestnews.NOTIFICATION_CHANNEL";
+    public static final int NEW_ARTICLE_NOTIFICATION_ID = 1;
+    public static final String ARTICLE_NOTIFICATION_GROUP_KEY = "com.zookanews.egyptlatestnews.ARTICLES_NOTIFICATION";
+    public static final int NOTIFICATION_SUMMARY_ID = 2;
 }

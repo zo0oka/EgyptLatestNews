@@ -42,8 +42,8 @@ public class ArticleViewModel extends AndroidViewModel {
         articleRepository.setAllAsRead();
     }
 
-    public List<Article> getUnreadArticles() throws ExecutionException, InterruptedException {
-        return articleRepository.getUnreadArticles();
+    public List<Article> getUnreadArticles(Boolean isRead) throws ExecutionException, InterruptedException {
+        return articleRepository.getUnreadArticles(isRead);
     }
 
     public Article getArticleById(int articleId) throws ExecutionException, InterruptedException {

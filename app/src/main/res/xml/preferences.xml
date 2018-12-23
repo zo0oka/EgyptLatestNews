@@ -7,7 +7,7 @@
             android:persistent="true"
             android:title="@string/pref_title_automatic_background_sync" />
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="2"
             android:entries="@array/pref_sync_frequency_titles"
             android:entryValues="@array/pref_sync_frequency_values"
             android:key="pref_key_sync_frequency"

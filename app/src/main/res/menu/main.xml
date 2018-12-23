@@ -28,14 +28,4 @@
         android:orderInCategory="500"
         android:title="@string/delete_all_read"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_sort_by"
-        android:orderInCategory="600"
-        android:title="@string/sort_by"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_switch_layout"
-        android:orderInCategory="700"
-        android:title="@string/switch_layout"
-        app:showAsAction="never" />
 </menu>

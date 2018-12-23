@@ -34,7 +34,6 @@ import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.FeedViewModel;
-import com.zookanews.egyptlatestnews.SettingsActivity;
 import com.zookanews.egyptlatestnews.UpdateService.DbUpdateService;
 import com.zookanews.egyptlatestnews.WorkManager.DBSyncWorker;
 import com.zookanews.egyptlatestnews.WorkManager.DeleteReadArticlesWorker;
@@ -92,13 +91,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         loadAd();
+
+
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         getSharedPrefValues(sharedPreferences);
         registerSyncOnStartupWorker(syncOnStartup, wifiForDownload);
         registerDBSyncWorker(backgroundSync, syncFrequency, wifiForDownload);
-        registerDeleteUnreadArticlesWorker(keepUnread, cleanUnread);
         registerDeleteReadArticles(cleanupRead);
+        registerDeleteUnreadArticlesWorker(keepUnread, cleanUnread);
+
+
     }
 
     private void getSharedPrefValues(SharedPreferences sharedPreferences) {
@@ -127,10 +130,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initializeViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Welcome");
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+
         toggle.syncState();
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
@@ -143,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+
     }
 
     private void loadAd() {
@@ -168,14 +176,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void registerDeleteReadArticles(String cleanupRead) {
-        PeriodicWorkRequest.Builder deleteUnreadWorker = new PeriodicWorkRequest.Builder(DeleteUnreadArticlesWorker.class, Integer.valueOf(cleanupRead), TimeUnit.DAYS);
-        WorkManager.getInstance().enqueueUniquePeriodicWork("DeleteRead", ExistingPeriodicWorkPolicy.KEEP, deleteUnreadWorker.build());
+        PeriodicWorkRequest.Builder deleteReadWorker = new PeriodicWorkRequest.Builder(DeleteReadArticlesWorker.class, Integer.valueOf(cleanupRead), TimeUnit.DAYS);
+        WorkManager.getInstance().enqueueUniquePeriodicWork("DeleteUnread", ExistingPeriodicWorkPolicy.KEEP, deleteReadWorker.build());
     }
 
     private void registerDeleteUnreadArticlesWorker(Boolean keepUnread, String cleanUnread) {
         if (!keepUnread) {
-            PeriodicWorkRequest.Builder deleteReadWorker = new PeriodicWorkRequest.Builder(DeleteReadArticlesWorker.class, Integer.valueOf(cleanUnread), TimeUnit.DAYS);
-            WorkManager.getInstance().enqueueUniquePeriodicWork("DeleteRead", ExistingPeriodicWorkPolicy.KEEP, deleteReadWorker.build());
+            PeriodicWorkRequest.Builder deleteUnreadWorker = new PeriodicWorkRequest.Builder(DeleteUnreadArticlesWorker.class, Integer.valueOf(cleanUnread), TimeUnit.DAYS);
+            WorkManager.getInstance().enqueueUniquePeriodicWork("DeleteUnread", ExistingPeriodicWorkPolicy.KEEP, deleteUnreadWorker.build());
         }
     }
 
@@ -252,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.action_hide_read) {
             try {
-                articlesAdapter.setArticles(articleViewModel.getUnreadArticles());
+                articlesAdapter.setArticles(articleViewModel.getUnreadArticles(false));
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -264,10 +272,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             articleViewModel.deleteAllArticles();
         } else if (id == R.id.action_delete_all_read) {
             articleViewModel.deleteReadArticles();
-        } else if (id == R.id.action_sort_by) {
-
-        } else if (id == R.id.action_switch_layout) {
-
         }
 
         return true;
@@ -329,8 +333,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getWebsiteArticles("bawabet_veto");
         } else if (id == R.id.nav_almogaz) {
             getWebsiteArticles("almogaz");
-        } else if (id == R.id.nav_app_rate) {
-        } else if (id == R.id.nav_add_source) {
         } else if (id == R.id.nav_sync_news) {
             startSyncService();
         } else if (id == R.id.nav_settings) {

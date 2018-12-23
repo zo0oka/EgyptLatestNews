@@ -38,7 +38,7 @@ public class ArticleRepository {
         return new getWebsiteArticlesAsyncTask(articleDao).execute(websiteName).get();
     }
 
-    public List<Article> getUnreadArticles() throws ExecutionException, InterruptedException {
+    public List<Article> getUnreadArticles(Boolean isRead) throws ExecutionException, InterruptedException {
         return new getUnreadArticlesAsyncTask(articleDao).execute().get();
     }
 
@@ -116,7 +116,7 @@ public class ArticleRepository {
         }
     }
 
-    private static class getUnreadArticlesAsyncTask extends AsyncTask<Void, Void, List<Article>> {
+    private static class getUnreadArticlesAsyncTask extends AsyncTask<Boolean, Void, List<Article>> {
         private ArticleDao asyncTaskDao;
 
         getUnreadArticlesAsyncTask(ArticleDao articleDao) {
@@ -124,8 +124,8 @@ public class ArticleRepository {
         }
 
         @Override
-        protected List<Article> doInBackground(Void... voids) {
-            return asyncTaskDao.getUnreadArticles();
+        protected List<Article> doInBackground(Boolean... booleans) {
+            return asyncTaskDao.getUnreadArticles(booleans[0]);
         }
     }
 
@@ -152,7 +152,7 @@ public class ArticleRepository {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            asyncTaskDao.getUnreadArticles();
+            asyncTaskDao.deleteUnreadArticles();
             return null;
         }
     }

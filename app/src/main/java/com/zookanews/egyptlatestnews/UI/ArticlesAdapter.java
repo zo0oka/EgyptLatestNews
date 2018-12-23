@@ -41,13 +41,15 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         final Article article = articles.get(position);
         articlesViewHolder.title.setText(article.getArticleTitle());
         if (article.getIsRead()) {
-            articlesViewHolder.title.setTextColor(Color.LTGRAY);
+            articlesViewHolder.title.setTextColor(Color.DKGRAY);
         } else {
             articlesViewHolder.title.setTextColor(Color.RED);
         }
         articlesViewHolder.description.setText(Html.fromHtml(article.getArticleDescription()));
+        articlesViewHolder.description.setTextColor(Color.DKGRAY);
         articlesViewHolder.pubDate.setText(DateUtils.getRelativeTimeSpanString(DateConverter.toTimestamp(article.getArticlePubDate()),
                 System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS));
+        articlesViewHolder.pubDate.setTextColor(Color.LTGRAY);
         if (article.getArticleThumbnailUrl() != null) {
             Picasso.get().load(article.getArticleThumbnailUrl()).into(articlesViewHolder.thumb);
         } else {

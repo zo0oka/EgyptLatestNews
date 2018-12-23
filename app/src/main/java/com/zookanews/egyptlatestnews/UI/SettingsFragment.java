@@ -1,8 +1,10 @@
-package com.zookanews.egyptlatestnews;
+package com.zookanews.egyptlatestnews.UI;
 
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;
+
+import com.zookanews.egyptlatestnews.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     @Override

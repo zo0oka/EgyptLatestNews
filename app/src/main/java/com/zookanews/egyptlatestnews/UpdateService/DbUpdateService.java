@@ -7,12 +7,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+import android.support.v7.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.zookanews.egyptlatestnews.Parser.SaxXmlParser;
@@ -27,9 +28,11 @@ import com.zookanews.egyptlatestnews.UI.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbUpdateService extends IntentService {
+import static com.zookanews.egyptlatestnews.Helpers.Constants.LIGHT;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.NOTIFICATION_CHANNEL_ID;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.VIBRATE;
 
-    private static final String CHANNEL_ID = "egyptlatestnews";
+public class DbUpdateService extends IntentService {
 
     public DbUpdateService() {
         super("dbsync");
@@ -44,7 +47,6 @@ public class DbUpdateService extends IntentService {
         ArticleDao articleDao = FeedRoomDatabase.getDatabase(getApplicationContext()).articleDao();
         FeedDao feedDao = FeedRoomDatabase.getDatabase(getApplicationContext()).feedDao();
         List<Feed> feeds = new ArrayList<>(feedDao.getAllFeeds());
-        Log.d("SERVICE", String.valueOf(feeds.size()));
         for (Feed feed : feeds) {
 //                articles.clear();
             articles = SaxXmlParser.parse(feed.getFeedRssLink());
@@ -59,10 +61,13 @@ public class DbUpdateService extends IntentService {
                             feed.getWebsiteName(),
                             feed.getCategoryName(),
                             false));
-                    ids.add(id);
+                    if (id != -1) {
+                        ids.add(id);
+                    }
                 }
             }
         }
+
         showToast(ids.size() + " new articles");
         ids.clear();
         stopForeground(true);
@@ -81,6 +86,9 @@ public class DbUpdateService extends IntentService {
     }
 
     private Notification createNotification() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Boolean light = sharedPreferences.getBoolean(LIGHT, true);
+        Boolean vibrate = sharedPreferences.getBoolean(VIBRATE, true);
 
         Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
@@ -90,29 +98,25 @@ public class DbUpdateService extends IntentService {
         }
 
         PendingIntent notificationPendingIntent = PendingIntent.getActivity(getApplicationContext(),
-                1, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                102, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationManager notificationManager = (NotificationManager) getApplicationContext()
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         assert notificationManager != null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
-            NotificationChannel notificationChannel = (new NotificationChannel(CHANNEL_ID, "Egypt Latest News",
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID) == null) {
+            NotificationChannel notificationChannel = (new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Egypt Latest News",
                     NotificationManager.IMPORTANCE_DEFAULT));
-            notificationChannel.enableVibration(true);
-            notificationChannel.enableLights(true);
+            notificationChannel.enableVibration(vibrate);
+            notificationChannel.enableLights(light);
             notificationChannel.setDescription("Egypt Latest News Notification Channel");
             notificationChannel.setLightColor(Color.WHITE);
             notificationManager.createNotificationChannel(notificationChannel);
         }
         NotificationCompat.Builder builder;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
-        } else {
-            builder = new NotificationCompat.Builder(getApplicationContext());
-        }
+        builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID);
         builder.setContentTitle("Getting latest news")
                 .setContentText("Loading...")
-                .setSmallIcon(R.mipmap.logo)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(notificationPendingIntent)
                 .setTicker("Sync in progress")
                 .setOngoing(true)
