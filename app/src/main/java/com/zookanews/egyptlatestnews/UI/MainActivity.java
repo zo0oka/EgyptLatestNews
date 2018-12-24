@@ -92,14 +92,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         loadAd();
 
-
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         getSharedPrefValues(sharedPreferences);
         registerSyncOnStartupWorker(syncOnStartup, wifiForDownload);
         registerDBSyncWorker(backgroundSync, syncFrequency, wifiForDownload);
-        registerDeleteReadArticles(cleanupRead);
-        registerDeleteUnreadArticlesWorker(keepUnread, cleanUnread);
+//        registerDeleteReadArticles(cleanupRead);
+//        registerDeleteUnreadArticlesWorker(keepUnread, cleanUnread);
 
 
     }

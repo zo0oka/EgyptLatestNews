@@ -29,11 +29,12 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
             super.onCreate(db);
             new PopulateDbAsync(INSTANCE).execute();
         }
-//        @Override
-//        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-//            super.onOpen(db);
-//            new SyncDBAsync(INSTANCE).execute();
-//        }
+
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+            new SyncDBAsync(INSTANCE).execute();
+        }
     };
 
     public static FeedRoomDatabase getDatabase(final Context context) {
@@ -87,18 +88,18 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
             }
             for (Feed feed : DBStartupData.feeds) {
                 feedDao.insertFeed(feed);
-                for (Article article : SaxXmlParser.parse(feed.getFeedRssLink())) {
-                    articleDao.insertArticle(new Article(
-                            article.getArticleTitle(),
-                            article.getArticleLink(),
-                            article.getArticleDescription(),
-                            article.getArticlePubDate(),
-                            article.getArticleThumbnailUrl(),
-                            feed.getWebsiteName(),
-                            feed.getCategoryName(),
-                            false
-                    ));
-                }
+//                for (Article article : SaxXmlParser.parse(feed.getFeedRssLink())) {
+//                    articleDao.insertArticle(new Article(
+//                            article.getArticleTitle(),
+//                            article.getArticleLink(),
+//                            article.getArticleDescription(),
+//                            article.getArticlePubDate(),
+//                            article.getArticleThumbnailUrl(),
+//                            feed.getWebsiteName(),
+//                            feed.getCategoryName(),
+//                            false
+//                    ));
+//                }
             }
             return null;
         }

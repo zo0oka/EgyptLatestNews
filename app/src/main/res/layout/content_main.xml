@@ -5,6 +5,7 @@
     android:id="@+id/swipeContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CCCCCC"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".UI.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -27,7 +28,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="#cccccc" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

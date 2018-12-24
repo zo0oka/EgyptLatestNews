@@ -73,4 +73,8 @@ public class ArticleViewModel extends AndroidViewModel {
     public List<Article> getReadArticles() throws ExecutionException, InterruptedException {
         return articleRepository.getReadArticles();
     }
+
+    public List<Article> getArticlesOlderThan() throws ExecutionException, InterruptedException {
+        return articleRepository.getArticlesOlderthan();
+    }
 }

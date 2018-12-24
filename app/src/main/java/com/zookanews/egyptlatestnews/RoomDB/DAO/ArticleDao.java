@@ -18,16 +18,16 @@ public interface ArticleDao {
     @Query("SELECT * FROM articles_table ORDER BY date DESC")
     LiveData<List<Article>> getAllArticles();
 
-    @Query("SELECT * FROM articles_table WHERE category_name = :categoryName ORDER BY ID DESC")
+    @Query("SELECT * FROM articles_table WHERE category_name = :categoryName ORDER BY date DESC")
     List<Article> getCategoryArticles(String categoryName);
 
-    @Query("SELECT * FROM articles_table WHERE website_name = :websiteName ORDER BY ID DESC")
+    @Query("SELECT * FROM articles_table WHERE website_name = :websiteName ORDER BY date DESC")
     List<Article> getWebsiteArticles(String websiteName);
 
-    @Query("SELECT * FROM articles_table WHERE isRead = :isRead ORDER BY ID DESC")
+    @Query("SELECT * FROM articles_table WHERE isRead = :isRead ORDER BY date DESC")
     List<Article> getUnreadArticles(Boolean isRead);
 
-    @Query("SELECT * FROM articles_table WHERE isRead = 1 ORDER BY ID DESC")
+    @Query("SELECT * FROM articles_table WHERE isRead = 1 ORDER BY date DESC")
     List<Article> getReadArticles();
 
     @Query("DELETE FROM articles_table WHERE isRead = 1")
@@ -48,6 +48,9 @@ public interface ArticleDao {
     @Query("SELECT * FROM articles_table WHERE ID = :articleId")
     Article getArticleById(int articleId);
 
-    @Query("SELECT * FROM articles_table WHERE description LIKE :searchQuery ORDER BY ID DESC")
+    @Query("SELECT * FROM articles_table WHERE description LIKE :searchQuery ORDER BY date DESC")
     List<Article> searchResultArticles(String searchQuery);
+
+    @Query("SELECT * FROM articles_table WHERE date <= strftime('%s', 'now', '-' || 2 || ' days') * 1000 ORDER BY date DESC")
+    List<Article> getArticlesOlderThan();
 }

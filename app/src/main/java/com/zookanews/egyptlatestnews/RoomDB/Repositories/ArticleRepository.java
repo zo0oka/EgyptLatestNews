@@ -42,6 +42,9 @@ public class ArticleRepository {
         return new getUnreadArticlesAsyncTask(articleDao).execute().get();
     }
 
+    public List<Article> getArticlesOlderthan() throws ExecutionException, InterruptedException {
+        return new getArticlesOlderThanAsyncTask(articleDao).execute().get();
+    }
     public void deleteAllArticles() {
         new deleteAllArticlesAsyncTask(articleDao).execute();
     }
@@ -235,6 +238,19 @@ public class ArticleRepository {
         protected Void doInBackground(Void... voids) {
             asyncTaskDao.setAllAsRead();
             return null;
+        }
+    }
+
+    private static class getArticlesOlderThanAsyncTask extends AsyncTask<Void, Void, List<Article>> {
+        ArticleDao asyncTaskDao;
+
+        getArticlesOlderThanAsyncTask(ArticleDao articleDao) {
+            asyncTaskDao = articleDao;
+        }
+
+        @Override
+        protected List<Article> doInBackground(Void... voids) {
+            return asyncTaskDao.getArticlesOlderThan();
         }
     }
 }

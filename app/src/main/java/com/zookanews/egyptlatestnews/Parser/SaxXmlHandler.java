@@ -111,7 +111,7 @@ public class SaxXmlHandler extends DefaultHandler {
         if (lettersCount == 29) {
             pubDate = (new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z")).parse(dateString.replace("GMT", "EET"));
         } else if (lettersCount == 19) {
-            pubDate = (new SimpleDateFormat("yyyy-MM-dd DD:mm:ss")).parse(dateString);
+            pubDate = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse(dateString);
         } else if (lettersCount == 31) {
             pubDate = (new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z")).parse(dateString);
         } else if (lettersCount == 26) {
