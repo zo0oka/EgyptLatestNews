@@ -90,6 +90,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+        notificationManager.cancelAll();
+
         loadAd();
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -97,10 +101,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSharedPrefValues(sharedPreferences);
         registerSyncOnStartupWorker(syncOnStartup, wifiForDownload);
         registerDBSyncWorker(backgroundSync, syncFrequency, wifiForDownload);
-//        registerDeleteReadArticles(cleanupRead);
-//        registerDeleteUnreadArticlesWorker(keepUnread, cleanUnread);
-
-
+        registerDeleteReadArticles();
+        registerDeleteUnreadArticlesWorker(keepUnread);
     }
 
     private void getSharedPrefValues(SharedPreferences sharedPreferences) {
@@ -137,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         toggle.syncState();
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.secondaryColor));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -173,15 +175,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void registerDeleteReadArticles(String cleanupRead) {
-        PeriodicWorkRequest.Builder deleteReadWorker = new PeriodicWorkRequest.Builder(DeleteReadArticlesWorker.class, Integer.valueOf(cleanupRead), TimeUnit.DAYS);
-        WorkManager.getInstance().enqueueUniquePeriodicWork("DeleteUnread", ExistingPeriodicWorkPolicy.KEEP, deleteReadWorker.build());
+    private void registerDeleteReadArticles() {
+        OneTimeWorkRequest.Builder deleteReadWorker = new OneTimeWorkRequest.Builder(DeleteReadArticlesWorker.class);
+        WorkManager.getInstance().enqueue(deleteReadWorker.build());
     }
 
-    private void registerDeleteUnreadArticlesWorker(Boolean keepUnread, String cleanUnread) {
+    private void registerDeleteUnreadArticlesWorker(Boolean keepUnread) {
         if (!keepUnread) {
-            PeriodicWorkRequest.Builder deleteUnreadWorker = new PeriodicWorkRequest.Builder(DeleteUnreadArticlesWorker.class, Integer.valueOf(cleanUnread), TimeUnit.DAYS);
-            WorkManager.getInstance().enqueueUniquePeriodicWork("DeleteUnread", ExistingPeriodicWorkPolicy.KEEP, deleteUnreadWorker.build());
+            OneTimeWorkRequest.Builder deleteUnreadWorker = new OneTimeWorkRequest.Builder(DeleteUnreadArticlesWorker.class);
+            WorkManager.getInstance().enqueue(deleteUnreadWorker.build());
         }
     }
 

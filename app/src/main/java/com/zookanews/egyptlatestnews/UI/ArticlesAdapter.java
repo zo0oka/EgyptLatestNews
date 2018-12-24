@@ -42,8 +42,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         articlesViewHolder.title.setText(Html.fromHtml(article.getArticleTitle()));
         if (article.getIsRead()) {
             articlesViewHolder.title.setTextColor(Color.DKGRAY);
-        } else {
-            articlesViewHolder.title.setTextColor(Color.RED);
         }
         articlesViewHolder.description.setText(Html.fromHtml(article.getArticleDescription()));
         articlesViewHolder.description.setTextColor(Color.DKGRAY);

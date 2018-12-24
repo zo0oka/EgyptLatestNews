@@ -53,4 +53,10 @@ public interface ArticleDao {
 
     @Query("SELECT * FROM articles_table WHERE date <= strftime('%s', 'now', '-' || 2 || ' days') * 1000 ORDER BY date DESC")
     List<Article> getArticlesOlderThan();
+
+    @Query("DELETE FROM articles_table WHERE date <= strftime('%s', 'now', '-' || :noOfDays || ' days') AND isRead = 0")
+    void deleteUnreadArticlesOlderThan(int noOfDays);
+
+    @Query("DELETE FROM articles_table WHERE date <= strftime('%s', 'now', '-' || :noOfDays || ' days') AND isRead = 1")
+    void deleteReadArticlesOlderThan(int noOfDays);
 }

@@ -77,4 +77,12 @@ public class ArticleViewModel extends AndroidViewModel {
     public List<Article> getArticlesOlderThan() throws ExecutionException, InterruptedException {
         return articleRepository.getArticlesOlderthan();
     }
+
+    public void deleteUnreadArticlesOlderThan(int noOfDays) {
+        articleRepository.deleteUnreadArticlesOlderThan(noOfDays);
+    }
+
+    public void deleteReadArticlesOlderThan(int noOfDays) {
+        articleRepository.deleteReadArticlesOlderThan(noOfDays);
+    }
 }

@@ -95,6 +95,8 @@ public class DBSyncWorker extends Worker {
                         ids.add(id);
                         if (notifications) {
                             Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             PendingIntent notificationPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                                     101, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                             noOfNotifications++;

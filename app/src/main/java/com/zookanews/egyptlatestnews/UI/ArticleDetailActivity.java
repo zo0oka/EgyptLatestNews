@@ -3,6 +3,7 @@ package com.zookanews.egyptlatestnews.UI;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
@@ -56,6 +57,19 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ArticleWebViewActivity.class);
                 intent.putExtra("articleLink", article.getArticleLink());
                 startActivity(intent);
+            }
+        });
+
+        FloatingActionButton floatingActionButton = findViewById(R.id.article_detail_fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, article.getArticleTitle());
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, article.getArticleDescription());
+                sharingIntent.putExtra(Intent.EXTRA_TITLE, article.getArticleTitle());
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }
         });
 

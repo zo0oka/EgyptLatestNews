@@ -45,6 +45,14 @@ public class ArticleRepository {
     public List<Article> getArticlesOlderthan() throws ExecutionException, InterruptedException {
         return new getArticlesOlderThanAsyncTask(articleDao).execute().get();
     }
+
+    public void deleteUnreadArticlesOlderThan(int noOfDays) {
+        new deleteUnreadArticlesOlderThanAsyncTask(articleDao).execute(noOfDays);
+    }
+
+    public void deleteReadArticlesOlderThan(int noOfDays) {
+        new deleteReadArticlesOlderThanAsyncTask(articleDao).execute(noOfDays);
+    }
     public void deleteAllArticles() {
         new deleteAllArticlesAsyncTask(articleDao).execute();
     }
@@ -251,6 +259,34 @@ public class ArticleRepository {
         @Override
         protected List<Article> doInBackground(Void... voids) {
             return asyncTaskDao.getArticlesOlderThan();
+        }
+    }
+
+    private static class deleteUnreadArticlesOlderThanAsyncTask extends AsyncTask<Integer, Void, Void> {
+        ArticleDao asyncTaskDao;
+
+        deleteUnreadArticlesOlderThanAsyncTask(ArticleDao articleDao) {
+            asyncTaskDao = articleDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            asyncTaskDao.deleteUnreadArticlesOlderThan(integers[0]);
+            return null;
+        }
+    }
+
+    private static class deleteReadArticlesOlderThanAsyncTask extends AsyncTask<Integer, Void, Void> {
+        ArticleDao asyncTaskDao;
+
+        deleteReadArticlesOlderThanAsyncTask(ArticleDao articleDao) {
+            asyncTaskDao = articleDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            asyncTaskDao.deleteReadArticlesOlderThan(integers[0]);
+            return null;
         }
     }
 }
