@@ -22,8 +22,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -56,6 +58,10 @@ import static com.zookanews.egyptlatestnews.Helpers.Constants.KEEP_UNREAD_ARTICL
 import static com.zookanews.egyptlatestnews.Helpers.Constants.SYNC_FREQUENCY;
 import static com.zookanews.egyptlatestnews.Helpers.Constants.SYNC_ON_STARTUP;
 import static com.zookanews.egyptlatestnews.Helpers.Constants.WIFI_ONLY_FOR_DOWNLOAD;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.categoryMenuIds;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.categoryNames;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.websiteMenuIds;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.websiteNames;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -75,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Boolean keepUnread;
     private String cleanupRead;
     private String cleanUnread;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +90,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initializeViews();
         initializeViewModels();
         setupRecyclerView();
+
         articleViewModel.getAllArticles().observe(this, new Observer<List<Article>>() {
             @Override
             public void onChanged(@Nullable List<Article> articles) {
                 articlesAdapter.setArticles(articles);
             }
         });
+        setCategoryCounters();
+        setWebsiteCounters();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert notificationManager != null;
@@ -103,6 +113,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         registerDBSyncWorker(backgroundSync, syncFrequency, wifiForDownload);
         registerDeleteReadArticles();
         registerDeleteUnreadArticlesWorker(keepUnread);
+
+    }
+
+    private void setWebsiteCounters() {
+        for (int i = 0; i < 12; i++) {
+            getWebsiteArticlesCount(websiteNames[i], websiteMenuIds[i]);
+        }
+    }
+
+    private void getWebsiteArticlesCount(String websiteName, final int menuId) {
+        articleViewModel.getCountOfWebsiteUnreadArticles(websiteName).observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                TextView counter = (TextView) navigationView.getMenu().findItem(menuId).getActionView();
+                counter.setText(String.valueOf(integer));
+                counter.setGravity(Gravity.CENTER_VERTICAL);
+            }
+        });
+    }
+
+    private void setCategoryCounters() {
+        for (int i = 0; i < 14; i++) {
+            getCategoryArticlesCount(categoryNames[i], categoryMenuIds[i]);
+        }
+    }
+
+    private void getCategoryArticlesCount(String categoryName, final int menuId) {
+        articleViewModel.getCountOfCategoryUnreadArticles(categoryName).observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                TextView counter = (TextView) navigationView.getMenu().findItem(menuId).getActionView();
+                counter.setText(String.valueOf(integer));
+                counter.setGravity(Gravity.CENTER_VERTICAL);
+            }
+        });
     }
 
     private void getSharedPrefValues(SharedPreferences sharedPreferences) {
@@ -119,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        articlesAdapter = new ArticlesAdapter(this);
+        articlesAdapter = new ArticlesAdapter(this, articleViewModel);
         recyclerView.setAdapter(articlesAdapter);
     }
 
@@ -147,9 +192,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+
+        final TextView counter = (TextView) navigationView.getMenu().findItem(R.id.nav_almasry_alyoum).getActionView();
+        counter.setGravity(Gravity.CENTER_VERTICAL);
+
+
 
     }
 
@@ -247,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         assert searchManager != null;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
+
         return true;
     }
 
@@ -258,31 +309,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_hide_read) {
-            try {
-                articlesAdapter.setArticles(articleViewModel.getUnreadArticles(false));
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else if (id == R.id.action_mark_all_read) {
-            articleViewModel.setAllAsRead();
-        } else if (id == R.id.action_delete_all) {
-            articleViewModel.deleteAllArticles();
-        } else if (id == R.id.action_delete_all_read) {
-            articleViewModel.deleteReadArticles();
-        }
+//        if (id == R.id.action_hide_read) {
+//            try {
+//                articlesAdapter.setArticles(articleViewModel.getUnreadArticles(false));
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        } else if (id == R.id.action_mark_all_read) {
+//            articleViewModel.setAllAsRead();
+//        } else if (id == R.id.action_delete_all) {
+//            articleViewModel.deleteAllArticles();
+//        } else if (id == R.id.action_delete_all_read) {
+//            articleViewModel.deleteReadArticles();
+//        }
 
         return true;
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         if (id == R.id.nav_latest_news) {
-            articlesAdapter.setArticles(articleViewModel.getAllArticles().getValue());
+            articleViewModel.getAllArticles().observe(this, new Observer<List<Article>>() {
+                @Override
+                public void onChanged(@Nullable List<Article> articles) {
+                    articlesAdapter.setArticles(articles);
+                }
+            });
         } else if (id == R.id.nav_politics) {
             getCategoryArticles("politics");
         } else if (id == R.id.nav_accidents) {
@@ -339,10 +396,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
         } else if (id == R.id.nav_privacy_policy) {
+        } else if (id == R.id.nav_favorites) {
+            getFavoriteArticles();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void getFavoriteArticles() {
+        try {
+            articlesAdapter.setArticles(articleViewModel.getFavoriteArticles());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getWebsiteArticles(String websiteName) {

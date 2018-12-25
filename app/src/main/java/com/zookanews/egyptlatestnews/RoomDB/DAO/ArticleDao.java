@@ -30,6 +30,9 @@ public interface ArticleDao {
     @Query("SELECT * FROM articles_table WHERE isRead = 1 ORDER BY date DESC")
     List<Article> getReadArticles();
 
+    @Query("SELECT * FROM articles_table WHERE isFavorite = 1 ORDER BY date DESC")
+    List<Article> getFavoriteArticles();
+
     @Query("DELETE FROM articles_table WHERE isRead = 1")
     void deleteReadArticles();
 
@@ -41,6 +44,9 @@ public interface ArticleDao {
 
     @Query("UPDATE articles_table SET isRead = :isRead WHERE ID = :articleId")
     void updateReadStatus(int articleId, Boolean isRead);
+
+    @Query("UPDATE articles_table SET isFavorite = :isFavorite WHERE ID = :articleId")
+    void updateFavoriteStatus(int articleId, Boolean isFavorite);
 
     @Query("UPDATE articles_table SET isRead = 1")
     void setAllAsRead();
@@ -59,4 +65,10 @@ public interface ArticleDao {
 
     @Query("DELETE FROM articles_table WHERE date <= strftime('%s', 'now', '-' || :noOfDays || ' days') AND isRead = 1")
     void deleteReadArticlesOlderThan(int noOfDays);
+
+    @Query("SELECT COUNT(ID) FROM articles_table WHERE isRead = 0 AND category_name = :categoryName")
+    LiveData<Integer> getCountOfCategoryUnreadArticles(String categoryName);
+
+    @Query("SELECT COUNT(ID) FROM articles_table WHERE isRead = 0 AND website_name = :websiteName")
+    LiveData<Integer> getCountOfWebsiteUnreadArticles(String websiteName);
 }

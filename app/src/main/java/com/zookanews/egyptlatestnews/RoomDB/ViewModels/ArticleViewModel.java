@@ -70,8 +70,16 @@ public class ArticleViewModel extends AndroidViewModel {
         return articleRepository.searchResultArticles(searchQuery);
     }
 
+    public void updateFavoriteStatus(int articleId, Boolean isFavorite) {
+        articleRepository.updateFavoriteStatus(articleId, isFavorite);
+    }
+
     public List<Article> getReadArticles() throws ExecutionException, InterruptedException {
         return articleRepository.getReadArticles();
+    }
+
+    public List<Article> getFavoriteArticles() throws ExecutionException, InterruptedException {
+        return articleRepository.getFavoriteArticles();
     }
 
     public List<Article> getArticlesOlderThan() throws ExecutionException, InterruptedException {
@@ -84,5 +92,13 @@ public class ArticleViewModel extends AndroidViewModel {
 
     public void deleteReadArticlesOlderThan(int noOfDays) {
         articleRepository.deleteReadArticlesOlderThan(noOfDays);
+    }
+
+    public LiveData<Integer> getCountOfCategoryUnreadArticles(String categoryName) {
+        return articleRepository.getCountOfCategoryUnreadArticles(categoryName);
+    }
+
+    public LiveData<Integer> getCountOfWebsiteUnreadArticles(String websiteName) {
+        return articleRepository.getCountOfWebsiteUnreadArticles(websiteName);
     }
 }

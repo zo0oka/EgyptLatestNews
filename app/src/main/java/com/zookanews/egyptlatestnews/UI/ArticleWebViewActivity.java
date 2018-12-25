@@ -1,5 +1,7 @@
 package com.zookanews.egyptlatestnews.UI;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,10 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
+import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
+
+import java.util.concurrent.ExecutionException;
 
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 
@@ -22,6 +28,7 @@ public class ArticleWebViewActivity extends AppCompatActivity {
     private WebView webView;
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
+    private Article article;
 
 
 
@@ -46,11 +53,21 @@ public class ArticleWebViewActivity extends AppCompatActivity {
         });
 
         setWebViewSettings();
-        loadUrlInWebView();
+        try {
+            loadUrlInWebView();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
-    private void loadUrlInWebView() {
-        String url = getIntent().getExtras().getString("articleLink");
+    private void loadUrlInWebView() throws ExecutionException, InterruptedException {
+        ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
+        article = articleViewModel.getArticleById(getIntent().getExtras().getInt("article_id"));
+        String url = article.getArticleLink();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             webView.getWebChromeClient();
         }
@@ -80,6 +97,9 @@ public class ArticleWebViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("articleId", article.getArticleId());
+        finish();
         super.onBackPressed();
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();

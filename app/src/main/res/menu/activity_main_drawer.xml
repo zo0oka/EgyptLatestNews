@@ -10,61 +10,87 @@
                 <item
                     android:id="@+id/nav_latest_news"
                     android:icon="@drawable/ic_nav_latest_news"
-                    android:actionLayout="@layout/menu_counter"
                     android:title="@string/nav_latest_news"
-                    app:actionViewClass="android.widget.TextView" />
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_politics"
                     android:icon="@drawable/ic_nav_politics"
-                    android:title="@string/nav_politics" />
+                    android:title="@string/nav_politics"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_accidents"
                     android:icon="@drawable/ic_nav_accidents"
-                    android:title="@string/nav_accidents" />
+                    android:title="@string/nav_accidents"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_finance"
                     android:icon="@drawable/ic_nav_finance"
-                    android:title="@string/nav_finance" />
+                    android:title="@string/nav_finance"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_sports"
                     android:icon="@drawable/ic_nav_sports"
-                    android:title="@string/nav_sports" />
+                    android:title="@string/nav_sports"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_woman"
                     android:icon="@drawable/ic_nav_woman"
-                    android:title="@string/nav_woman" />
+                    android:title="@string/nav_woman"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_arts"
                     android:icon="@drawable/ic_nav_arts"
-                    android:title="@string/nav_arts" />
+                    android:title="@string/nav_arts"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_technology"
                     android:icon="@drawable/ic_nav_technology"
-                    android:title="@string/nav_technology" />
+                    android:title="@string/nav_technology"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_videos"
                     android:icon="@drawable/ic_nav_videos"
-                    android:title="@string/nav_videos" />
+                    android:title="@string/nav_videos"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_automotive"
                     android:icon="@drawable/ic_nav_automotive"
-                    android:title="@string/nav_automotive" />
+                    android:title="@string/nav_automotive"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_investigations"
                     android:icon="@drawable/ic_nav_investigations"
-                    android:title="@string/nav_investigations" />
+                    android:title="@string/nav_investigations"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_culture"
                     android:icon="@drawable/ic_nav_culture"
-                    android:title="@string/nav_culture" />
+                    android:title="@string/nav_culture"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_travel"
                     android:icon="@drawable/ic_nav_travel"
-                    android:title="@string/nav_travel" />
+                    android:title="@string/nav_travel"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_health"
                     android:icon="@drawable/ic_nav_health"
-                    android:title="@string/nav_health" />
+                    android:title="@string/nav_health"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
 
             </menu>
         </item>
@@ -75,52 +101,81 @@
             <menu>
                 <item
                     android:id="@+id/nav_almasry_alyoum"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_almasry_alyoum" />
+                    android:title="@string/nav_almasry_alyoum"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_alwatan"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_alwatan" />
+                    android:title="@string/nav_alwatan"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_aldostour"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_aldostour" />
+                    android:title="@string/nav_aldostour"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_akhbarak"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_akhbarak" />
+                    android:title="@string/nav_akhbarak"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_alwafd"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_alwafd" />
+                    android:title="@string/nav_alwafd"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_bbc_arabic"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_bbc_arabic" />
+                    android:title="@string/nav_bbc_arabic"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_alfagr"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_alfagr" />
+                    android:title="@string/nav_alfagr"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_rose_alyousef"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_rose_alyousef" />
+                    android:title="@string/nav_rose_alyousef"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_akhbar_elhawadeth"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_akhbar_elhawadeth" />
+                    android:title="@string/nav_akhbar_elhawadeth"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_sada_elbalad"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_sada_elbalad" />
+                    android:title="@string/nav_sada_elbalad"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_bawabet_veto"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_bawabet_veto" />
+                    android:title="@string/nav_bawabet_veto"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_almogaz"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/nav_almogaz" />
+                    android:title="@string/nav_almogaz"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
+                <item
+                    android:id="@+id/nav_favorites"
+                    android:icon="@drawable/ic_nav_accidents"
+                    android:title="@string/nav_favorites"
+                    app:actionViewClass="android.widget.TextView"
+                    app:showAsAction="always" />
             </menu>
         </item>
     </group>

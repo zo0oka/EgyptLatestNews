@@ -90,6 +90,7 @@ public class DBSyncWorker extends Worker {
                             article.getArticleThumbnailUrl(),
                             feed.getWebsiteName(),
                             feed.getCategoryName(),
+                            false,
                             false));
                     if (id != -1) {
                         ids.add(id);

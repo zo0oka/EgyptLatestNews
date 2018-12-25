@@ -60,9 +60,8 @@ public class SearchActivityResult extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.search_result_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        ArticlesAdapter articlesAdapter = new ArticlesAdapter(this);
+        ArticlesAdapter articlesAdapter = new ArticlesAdapter(this, articleViewModel);
         articlesAdapter.setArticles(results);
         recyclerView.setAdapter(articlesAdapter);
     }
-
 }

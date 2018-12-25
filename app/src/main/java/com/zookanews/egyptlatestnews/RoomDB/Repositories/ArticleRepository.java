@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 public class ArticleRepository {
     private final ArticleDao articleDao;
     private LiveData<List<Article>> allArticles;
+    private LiveData<Integer> unreadArticles;
 
     public ArticleRepository(Application application) {
         FeedRoomDatabase db = FeedRoomDatabase.getDatabase(application);
@@ -41,6 +42,7 @@ public class ArticleRepository {
     public List<Article> getUnreadArticles(Boolean isRead) throws ExecutionException, InterruptedException {
         return new getUnreadArticlesAsyncTask(articleDao).execute().get();
     }
+
 
     public List<Article> getArticlesOlderthan() throws ExecutionException, InterruptedException {
         return new getArticlesOlderThanAsyncTask(articleDao).execute().get();
@@ -70,6 +72,11 @@ public class ArticleRepository {
         new updateReadStatusAsyncTask(articleDao).execute(params);
     }
 
+    public void updateFavoriteStatus(int articleId, Boolean isFavorite) {
+        Params params = new Params(articleId, isFavorite);
+        new updateFavoriteStatusAsyncTask(articleDao).execute(params);
+    }
+
     public void setAllAsRead() {
         new setAllAsReadAsyncTask(articleDao).execute();
     }
@@ -85,6 +92,18 @@ public class ArticleRepository {
 
     public List<Article> getReadArticles() throws ExecutionException, InterruptedException {
         return new getReadArticlesAsyncTask(articleDao).execute().get();
+    }
+
+    public List<Article> getFavoriteArticles() throws ExecutionException, InterruptedException {
+        return new getFavoriteArticlesAsyncTask(articleDao).execute().get();
+    }
+
+    public LiveData<Integer> getCountOfCategoryUnreadArticles(String categoryName) {
+        return articleDao.getCountOfCategoryUnreadArticles(categoryName);
+    }
+
+    public LiveData<Integer> getCountOfWebsiteUnreadArticles(String websiteName) {
+        return articleDao.getCountOfWebsiteUnreadArticles(websiteName);
     }
 
     private static class insertArticleAsyncTask extends AsyncTask<Article, Void, Long> {
@@ -136,7 +155,13 @@ public class ArticleRepository {
 
         @Override
         protected List<Article> doInBackground(Boolean... booleans) {
-            return asyncTaskDao.getUnreadArticles(booleans[0]);
+            List<Article> articles;
+            articles = asyncTaskDao.getUnreadArticles(booleans[0]);
+            if (articles == null) {
+                articles.add(new Article(null, "http://", "No new article!", null,
+                        null, null, null, false, false));
+            }
+            return articles;
         }
     }
 
@@ -289,4 +314,56 @@ public class ArticleRepository {
             return null;
         }
     }
+
+    private static class getCountOfCategoryUnreadArticlesAsyncTask extends AsyncTask<String, Void, LiveData<Integer>> {
+        private ArticleDao asyncTaskDao;
+
+        getCountOfCategoryUnreadArticlesAsyncTask(ArticleDao articleDao) {
+            asyncTaskDao = articleDao;
+        }
+
+        @Override
+        protected LiveData<Integer> doInBackground(String... strings) {
+            return asyncTaskDao.getCountOfCategoryUnreadArticles(strings[0]);
+        }
+    }
+
+    private static class updateFavoriteStatusAsyncTask extends AsyncTask<Params, Void, Void> {
+        ArticleDao asyncTaskDao;
+
+        public updateFavoriteStatusAsyncTask(ArticleDao articleDao) {
+            asyncTaskDao = articleDao;
+        }
+
+        @Override
+        protected Void doInBackground(Params... params) {
+            asyncTaskDao.updateFavoriteStatus(params[0].getId(), params[0].getRead());
+            return null;
+        }
+    }
+
+    private static class getFavoriteArticlesAsyncTask extends AsyncTask<Void, Void, List<Article>> {
+        private ArticleDao asyncTaskDao;
+
+        getFavoriteArticlesAsyncTask(ArticleDao articleDao) {
+            asyncTaskDao = articleDao;
+        }
+
+        @Override
+        protected List<Article> doInBackground(Void... voids) {
+            return asyncTaskDao.getFavoriteArticles();
+        }
+    }
+//    private static class getCountOfWebsiteUnreadArticlesAsyncTask extends AsyncTask<Void, Void, Integer>{
+//        private ArticleDao asyncTaskDao;
+//
+//        getCountOfWebsiteUnreadArticlesAsyncTask(ArticleDao articleDao) {
+//            asyncTaskDao = articleDao;
+//        }
+//
+//        @Override
+//        protected Integer doInBackground(Void... strings) {
+//            return asyncTaskDao.getCountOfWebsiteUnreadArticles();
+//        }
+//    }
 }

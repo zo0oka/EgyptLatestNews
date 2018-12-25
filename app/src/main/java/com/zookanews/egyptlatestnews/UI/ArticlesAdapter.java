@@ -16,17 +16,20 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.zookanews.egyptlatestnews.R;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
+import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticlesViewHolder> {
 
+    private final ArticleViewModel articleViewModel;
     private List<Article> articles;
     private Context context;
 
-    ArticlesAdapter(Context context) {
+    ArticlesAdapter(Context context, ArticleViewModel articleViewModel) {
         this.context = context;
+        this.articleViewModel = articleViewModel;
     }
 
     @NonNull
@@ -42,6 +45,14 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         articlesViewHolder.title.setText(Html.fromHtml(article.getArticleTitle()));
         if (article.getIsRead()) {
             articlesViewHolder.title.setTextColor(Color.DKGRAY);
+            articlesViewHolder.isRead.setImageResource(R.drawable.ic_read);
+        } else {
+            articlesViewHolder.isRead.setImageResource(R.drawable.ic_unread);
+        }
+        if (article.getIsFavorite()) {
+            articlesViewHolder.isFavorite.setImageResource(R.drawable.ic_action_favorite_checked);
+        } else {
+            articlesViewHolder.isFavorite.setImageResource(R.drawable.ic_action_favorite_unchecked);
         }
         articlesViewHolder.description.setText(Html.fromHtml(article.getArticleDescription()));
         articlesViewHolder.description.setTextColor(Color.DKGRAY);
@@ -56,9 +67,22 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         articlesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                articleViewModel.updateReadStatus(article.getArticleId(), true);
                 Intent intent = new Intent(context, ArticleDetailActivity.class);
                 intent.putExtra("articleId", article.getArticleId());
                 context.startActivity(intent);
+            }
+        });
+        articlesViewHolder.isFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (article.getIsFavorite()) {
+                    articleViewModel.updateFavoriteStatus(article.getArticleId(), false);
+                    articlesViewHolder.isFavorite.setImageResource(R.drawable.ic_action_favorite_unchecked);
+                } else if (!article.getIsFavorite()) {
+                    articleViewModel.updateFavoriteStatus(article.getArticleId(), true);
+                    articlesViewHolder.isFavorite.setImageResource(R.drawable.ic_action_favorite_checked);
+                }
             }
         });
     }
@@ -80,7 +104,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         private final TextView title;
         private TextView description;
         private TextView pubDate;
-        private ImageView thumb;
+        private ImageView thumb, isRead, isFavorite;
 
         ArticlesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +112,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
             description = itemView.findViewById(R.id.description_textView);
             thumb = itemView.findViewById(R.id.article_imageView);
             pubDate = itemView.findViewById(R.id.pubDate_textView);
+            isRead = itemView.findViewById(R.id.isRead_imageView);
+            isFavorite = itemView.findViewById(R.id.isFavorite_imageView);
         }
     }
 }

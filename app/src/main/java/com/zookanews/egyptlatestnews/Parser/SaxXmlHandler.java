@@ -73,7 +73,7 @@ public class SaxXmlHandler extends DefaultHandler {
                 articlePubDate = Calendar.getInstance().getTime();
             }
 
-            article = new Article(title, articleLink, description, articlePubDate, articleThumbnailUrl, null, null, false);
+            article = new Article(title, articleLink, description, articlePubDate, articleThumbnailUrl, null, null, false, false);
             articles.add(article);
         } else if (qName.equalsIgnoreCase("title")) {
             title = tempValue.toString();

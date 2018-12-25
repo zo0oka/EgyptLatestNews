@@ -33,10 +33,23 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="C:\Users\Zo0oKaDev\Desktop\New folder\ic_nav_travel.png" />
-                                      <entry key="outputName" value="ic_nav_privacy_policy" />
-                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\Zo0oKaDev\Desktop\almasry_alyoum.png" />
+                                      <entry key="outputName" value="ic_nav_almasry_alyoum" />
+                                      <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="ff0000" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="notification">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\Zo0oKaDev\Desktop\almasry_alyoum.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -72,7 +85,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_share_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_favorite_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -83,7 +96,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="d32f2f" />
-                            <entry key="outputName" value="fab_share" />
+                            <entry key="outputName" value="ic_action_favorite_checked" />
                             <entry key="sourceFile" value="C:\Users\Zo0oKaDev" />
                           </map>
                         </option>

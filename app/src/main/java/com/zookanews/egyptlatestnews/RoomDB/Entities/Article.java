@@ -32,8 +32,10 @@ public class Article {
     private String categoryName;
     @ColumnInfo(name = "isRead")
     private Boolean isRead;
+    @ColumnInfo(name = "isFavorite")
+    private Boolean isFavorite;
 
-    public Article(@NonNull int articleId, String articleTitle, @NonNull String articleLink, String articleDescription, Date articlePubDate, String articleThumbnailUrl, String websiteName, String categoryName, Boolean isRead) {
+    public Article(@NonNull int articleId, String articleTitle, @NonNull String articleLink, String articleDescription, Date articlePubDate, String articleThumbnailUrl, String websiteName, String categoryName, Boolean isRead, Boolean isFavorite) {
         this.articleId = articleId;
         this.articleTitle = articleTitle;
         this.articleLink = articleLink;
@@ -43,10 +45,11 @@ public class Article {
         this.websiteName = websiteName;
         this.categoryName = categoryName;
         this.isRead = isRead;
+        this.isFavorite = isFavorite;
     }
 
     @Ignore
-    public Article(String articleTitle, @NonNull String articleLink, String articleDescription, Date articlePubDate, String articleThumbnailUrl, String websiteName, String categoryName, Boolean isRead) {
+    public Article(String articleTitle, @NonNull String articleLink, String articleDescription, Date articlePubDate, String articleThumbnailUrl, String websiteName, String categoryName, Boolean isRead, Boolean isFavorite) {
         this.articleTitle = articleTitle;
         this.articleLink = articleLink;
         this.articleDescription = articleDescription;
@@ -55,6 +58,8 @@ public class Article {
         this.websiteName = websiteName;
         this.categoryName = categoryName;
         this.isRead = isRead;
+        this.isFavorite = isFavorite;
+
     }
 
     @NonNull
@@ -77,6 +82,14 @@ public class Article {
     @NonNull
     public String getArticleLink() {
         return articleLink;
+    }
+
+    public Boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
     public void setArticleLink(@NonNull String articleLink) {

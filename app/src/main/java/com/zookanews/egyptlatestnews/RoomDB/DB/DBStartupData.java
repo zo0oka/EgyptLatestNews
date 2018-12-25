@@ -111,4 +111,5 @@ class DBStartupData {
             add(new Website("almogaz", "الموجز", "http://www.almogaz.com/", "http://almogaz.com/rss"));
         }
     };
+
 }

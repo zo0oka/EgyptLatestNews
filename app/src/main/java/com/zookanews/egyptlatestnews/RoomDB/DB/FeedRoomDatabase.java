@@ -97,6 +97,7 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
                             article.getArticleThumbnailUrl(),
                             feed.getWebsiteName(),
                             feed.getCategoryName(),
+                            false,
                             false
                     ));
                 }
@@ -126,6 +127,7 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
                             article.getArticleThumbnailUrl(),
                             feed.getWebsiteName(),
                             feed.getCategoryName(),
+                            false,
                             false));
                 }
             }
