@@ -28,16 +28,11 @@ public class SaxXmlParser {
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             InputStream inputStream = conn.getInputStream();
-            // create a XMLReader from SAXParser
             XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser()
                     .getXMLReader();
-            // create a SAXXMLHandler
             SaxXmlHandler saxHandler = new SaxXmlHandler();
-            // store handler in XMLReader
             xmlReader.setContentHandler(saxHandler);
-            // the process starts
             xmlReader.parse(new InputSource(inputStream));
-            // get the `Employee list`
             articles = saxHandler.getArticles();
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -50,7 +45,6 @@ public class SaxXmlParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // return Employee list
         return articles;
     }
 }

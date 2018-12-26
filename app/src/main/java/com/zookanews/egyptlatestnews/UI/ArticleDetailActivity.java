@@ -1,6 +1,5 @@
 package com.zookanews.egyptlatestnews.UI;
 
-import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -30,10 +29,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ArticleDetailActivity extends AppCompatActivity {
 
-    private static final String articleId = "articleId";
     private Article article;
-    private int receivedArticleId;
-    private SharedPreferences sharedPreferences;
     private ArticleViewModel articleViewModel;
 
     @Override
@@ -41,10 +37,8 @@ public class ArticleDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
 
-//            receivedArticleId = getIntent().getExtras().getInt(articleId);
-
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        receivedArticleId = sharedPreferences.getInt("article_id", 0);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int receivedArticleId = sharedPreferences.getInt("article_id", 0);
 
         articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
         try {
@@ -96,7 +90,6 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         menu.findItem(R.id.action_favorite).setVisible(true);
         if (article.getIsFavorite()) {
@@ -111,14 +104,9 @@ public class ArticleDetailActivity extends AppCompatActivity {
         return true;
     }
 
-    @SuppressLint("StaticFieldLeak")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         if (id == R.id.action_favorite) {
             if (article.getIsFavorite()) {
                 articleViewModel.updateFavoriteStatus(article.getArticleId(), false);
@@ -129,23 +117,6 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 item.setIcon(R.drawable.ic_action_favorite_checked);
             }
         }
-
-//        if (id == R.id.action_hide_read) {
-//            try {
-//                articlesAdapter.setArticles(articleViewModel.getUnreadArticles(false));
-//            } catch (ExecutionException e) {
-//                e.printStackTrace();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        } else if (id == R.id.action_mark_all_read) {
-//            articleViewModel.setAllAsRead();
-//        } else if (id == R.id.action_delete_all) {
-//            articleViewModel.deleteAllArticles();
-//        } else if (id == R.id.action_delete_all_read) {
-//            articleViewModel.deleteReadArticles();
-//        }
-
         return true;
     }
 }

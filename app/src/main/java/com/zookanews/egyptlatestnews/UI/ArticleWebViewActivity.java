@@ -14,7 +14,6 @@ import android.webkit.WebViewClient;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
@@ -27,12 +26,8 @@ import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 public class ArticleWebViewActivity extends AppCompatActivity {
 
     private WebView webView;
-    private AdView mAdView;
     private InterstitialAd mInterstitialAd;
     private Article article;
-    private SharedPreferences sharedPreferences;
-
-
 
 
     @Override
@@ -67,7 +62,7 @@ public class ArticleWebViewActivity extends AppCompatActivity {
     }
 
     private void loadUrlInWebView() throws ExecutionException, InterruptedException {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         int articleId = sharedPreferences.getInt("article_id", 0);
         ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
         article = articleViewModel.getArticleById(articleId);
@@ -82,7 +77,7 @@ public class ArticleWebViewActivity extends AppCompatActivity {
         //        webView = findViewById(R.id.article_web_view);
         webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(false);
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);

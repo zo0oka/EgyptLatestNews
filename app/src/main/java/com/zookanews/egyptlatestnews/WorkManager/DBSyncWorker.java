@@ -127,7 +127,6 @@ public class DBSyncWorker extends Worker {
                                                         .setSummaryText("+" + (noOfNotifications - 5) + " more article(s)"))
                                                 .setNumber(noOfNotifications)
                                                 .setContentIntent(notificationPendingIntent)
-//                                    .setCategory(Notification.CATEGORY_EVENT)
                                                 .setGroupSummary(true)
                                                 .setGroup(ARTICLE_NOTIFICATION_GROUP_KEY)
                                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

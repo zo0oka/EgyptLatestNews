@@ -48,7 +48,6 @@ public class DbUpdateService extends IntentService {
         FeedDao feedDao = FeedRoomDatabase.getDatabase(getApplicationContext()).feedDao();
         List<Feed> feeds = new ArrayList<>(feedDao.getAllFeeds());
         for (Feed feed : feeds) {
-//                articles.clear();
             articles = SaxXmlParser.parse(feed.getFeedRssLink());
             if (articles != null) {
                 for (Article article : articles) {
@@ -121,7 +120,7 @@ public class DbUpdateService extends IntentService {
                 .setContentIntent(notificationPendingIntent)
                 .setTicker("Sync in progress")
                 .setOngoing(true)
-//                .setAutoCancel(true)
+                .setAutoCancel(true)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE);
         return builder.build();
     }

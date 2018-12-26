@@ -87,5 +87,6 @@
     <string name="favorite">Favorite</string>
     <string name="favorite_icon">Favorite icon</string>
     <string name="nav_favorites">الاخبار المفضلة</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 </resources>

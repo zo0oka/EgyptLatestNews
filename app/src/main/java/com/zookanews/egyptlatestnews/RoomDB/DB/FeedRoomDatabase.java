@@ -105,33 +105,4 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
             return null;
         }
     }
-
-    public static class SyncDBAsync extends AsyncTask<Void, Void, Void> {
-        private final FeedDao feedDao;
-        private final ArticleDao articleDao;
-
-        SyncDBAsync(FeedRoomDatabase db) {
-            feedDao = db.feedDao();
-            articleDao = db.articleDao();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            for (Feed feed : feedDao.getAllFeeds()) {
-                for (Article article : SaxXmlParser.parse(feed.getFeedRssLink())) {
-                    articleDao.insertArticle(new Article(
-                            article.getArticleTitle(),
-                            article.getArticleLink(),
-                            article.getArticleDescription(),
-                            article.getArticlePubDate(),
-                            article.getArticleThumbnailUrl(),
-                            feed.getWebsiteName(),
-                            feed.getCategoryName(),
-                            false,
-                            false));
-                }
-            }
-            return null;
-        }
-    }
 }

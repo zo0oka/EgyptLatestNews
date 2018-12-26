@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 
 import com.google.android.gms.ads.AdListener;
@@ -33,8 +32,6 @@ import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 public class WebsiteArticlesActivity extends AppCompatActivity {
 
     private ArticlesAdapter articlesAdapter;
-    private ArticleViewModel articleViewModel;
-    private WebsiteViewModel websiteViewModel;
     private InterstitialAd mInterstitialAd;
 
     @Override
@@ -57,8 +54,8 @@ public class WebsiteArticlesActivity extends AppCompatActivity {
 
         });
 
-        articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
-        websiteViewModel = ViewModelProviders.of(this).get(WebsiteViewModel.class);
+        ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
+        WebsiteViewModel websiteViewModel = ViewModelProviders.of(this).get(WebsiteViewModel.class);
         RecyclerView recyclerView = findViewById(R.id.website_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -108,8 +105,6 @@ public class WebsiteArticlesActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
         }
         super.onBackPressed();
     }

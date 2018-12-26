@@ -39,7 +39,7 @@ public class ArticleRepository {
     }
 
     public List<Article> getUnreadArticles(Boolean isRead) throws ExecutionException, InterruptedException {
-        return new getUnreadArticlesAsyncTask(articleDao).execute().get();
+        return new getUnreadArticlesAsyncTask(articleDao).execute(isRead).get();
     }
 
 
@@ -288,19 +288,6 @@ public class ArticleRepository {
         }
     }
 
-    private static class getCountOfCategoryUnreadArticlesAsyncTask extends AsyncTask<String, Void, LiveData<Integer>> {
-        private ArticleDao asyncTaskDao;
-
-        getCountOfCategoryUnreadArticlesAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected LiveData<Integer> doInBackground(String... strings) {
-            return asyncTaskDao.getCountOfCategoryUnreadArticles(strings[0]);
-        }
-    }
-
     private static class updateFavoriteStatusAsyncTask extends AsyncTask<Params, Void, Void> {
         ArticleDao asyncTaskDao;
 
@@ -327,16 +314,4 @@ public class ArticleRepository {
             return asyncTaskDao.getFavoriteArticles();
         }
     }
-//    private static class getCountOfWebsiteUnreadArticlesAsyncTask extends AsyncTask<Void, Void, Integer>{
-//        private ArticleDao asyncTaskDao;
-//
-//        getCountOfWebsiteUnreadArticlesAsyncTask(ArticleDao articleDao) {
-//            asyncTaskDao = articleDao;
-//        }
-//
-//        @Override
-//        protected Integer doInBackground(Void... strings) {
-//            return asyncTaskDao.getCountOfWebsiteUnreadArticles();
-//        }
-//    }
 }

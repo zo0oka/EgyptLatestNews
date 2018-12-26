@@ -32,9 +32,7 @@ import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 
 public class CategoryArticlesActivity extends AppCompatActivity {
 
-    private ArticleViewModel articleViewModel;
     private ArticlesAdapter articlesAdapter;
-    private CategoryViewModel categoryViewModel;
     private InterstitialAd mInterstitialAd;
 
     @Override
@@ -57,8 +55,8 @@ public class CategoryArticlesActivity extends AppCompatActivity {
 
         });
 
-        articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
-        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
+        ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
+        CategoryViewModel categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         RecyclerView recyclerView = findViewById(R.id.category_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

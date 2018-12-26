@@ -79,7 +79,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         assert searchManager != null;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
-
         return true;
     }
 }

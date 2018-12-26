@@ -1,6 +1,5 @@
 package com.zookanews.egyptlatestnews.UI;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
@@ -30,12 +29,10 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.zookanews.egyptlatestnews.Helpers.Constants;
 import com.zookanews.egyptlatestnews.R;
 import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
-import com.zookanews.egyptlatestnews.RoomDB.ViewModels.FeedViewModel;
 import com.zookanews.egyptlatestnews.UpdateService.DbUpdateService;
 import com.zookanews.egyptlatestnews.WorkManager.DBSyncWorker;
 import com.zookanews.egyptlatestnews.WorkManager.DeleteReadArticlesWorker;
@@ -66,21 +63,15 @@ import static com.zookanews.egyptlatestnews.Helpers.Constants.websiteNames;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private static final String TAG = MainActivity.class.getSimpleName();
     public SwipeRefreshLayout swipeRefreshLayout;
-    private List<Article> articles;
     private ArticleViewModel articleViewModel;
-    private FeedViewModel feedViewModel;
     private AdView mAdView;
     private ArticlesAdapter articlesAdapter;
-    private SharedPreferences sharedPreferences;
     private Boolean backgroundSync;
     private String syncFrequency;
     private Boolean syncOnStartup;
     private Boolean wifiForDownload;
     private Boolean keepUnread;
-    private String cleanupRead;
-    private String cleanUnread;
     private NavigationView navigationView;
 
     @Override
@@ -107,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadAd();
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         getSharedPrefValues(sharedPreferences);
         registerSyncOnStartupWorker(syncOnStartup, wifiForDownload);
         registerDBSyncWorker(backgroundSync, syncFrequency, wifiForDownload);
@@ -156,8 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         syncOnStartup = sharedPreferences.getBoolean(SYNC_ON_STARTUP, true);
         wifiForDownload = sharedPreferences.getBoolean(WIFI_ONLY_FOR_DOWNLOAD, true);
         keepUnread = sharedPreferences.getBoolean(KEEP_UNREAD_ARTICLES, true);
-        cleanupRead = sharedPreferences.getString(Constants.AUTO_CLEANUP_READ, "2");
-        cleanUnread = sharedPreferences.getString(Constants.AUTO_CLEANUP_UNREAD, "2");
     }
 
     private void setupRecyclerView() {
@@ -170,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initializeViewModels() {
         articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
-        feedViewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
     }
 
     private void initializeViews() {
@@ -297,33 +285,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         assert searchManager != null;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
-
-        return true;
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-//        if (id == R.id.action_hide_read) {
-//            try {
-//                articlesAdapter.setArticles(articleViewModel.getUnreadArticles(false));
-//            } catch (ExecutionException e) {
-//                e.printStackTrace();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        } else if (id == R.id.action_mark_all_read) {
-//            articleViewModel.setAllAsRead();
-//        } else if (id == R.id.action_delete_all) {
-//            articleViewModel.deleteAllArticles();
-//        } else if (id == R.id.action_delete_all_read) {
-//            articleViewModel.deleteReadArticles();
-//        }
 
         return true;
     }

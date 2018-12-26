@@ -2,7 +2,6 @@ package com.zookanews.egyptlatestnews.Parser;
 
 import android.annotation.SuppressLint;
 import android.text.Html;
-import android.util.Log;
 
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 
@@ -17,15 +16,10 @@ import java.util.Date;
 import java.util.List;
 
 public class SaxXmlHandler extends DefaultHandler {
-    private static final String TAG = SaxXmlHandler.class.getSimpleName();
     private StringBuilder tempValue = new StringBuilder();
-    private Article article;
     private List<Article> articles;
     private String link, title, description, imgSrc, guid, enclosure, thumb_url, mediaThumbnail, articleLink, articleThumbnailUrl, imageUrl;
-    private String dateString;
     private Date pubDate;
-    private Date articlePubDate;
-    private Calendar calendar;
 
     SaxXmlHandler() {
         articles = new ArrayList<>();
@@ -39,13 +33,10 @@ public class SaxXmlHandler extends DefaultHandler {
         tempValue.setLength(0);
         if (qName.equalsIgnoreCase("img")) {
             imgSrc = attributes.getValue(0);
-            Log.d(TAG, "imgSrc = " + imgSrc);
         } else if (qName.equalsIgnoreCase("enclosure")) {
             enclosure = attributes.getValue(0);
-            Log.d(TAG, "enclosure = " + enclosure);
         } else if (qName.equalsIgnoreCase("media:thumbnail")) {
             mediaThumbnail = attributes.getValue("url");
-            Log.d(TAG, "media:thumbnail = " + mediaThumbnail);
         }
     }
 
@@ -67,40 +58,34 @@ public class SaxXmlHandler extends DefaultHandler {
             } else if (imageUrl != null) {
                 articleThumbnailUrl = imageUrl;
             }
+            Date articlePubDate;
             if (pubDate != null) {
                 articlePubDate = pubDate;
             } else {
                 articlePubDate = Calendar.getInstance().getTime();
             }
 
-            article = new Article(title, articleLink, description, articlePubDate, articleThumbnailUrl, null, null, false, false);
+            Article article = new Article(title, articleLink, description, articlePubDate, articleThumbnailUrl, null, null, false, false);
             articles.add(article);
         } else if (qName.equalsIgnoreCase("title")) {
             title = tempValue.toString();
-            Log.d(TAG, "title = " + title);
         } else if (qName.equalsIgnoreCase("link")) {
             link = tempValue.toString();
-            Log.d(TAG, "link = " + link);
         } else if (qName.equalsIgnoreCase("description")) {
             description = String.valueOf(Html.fromHtml(tempValue.toString()));
-            Log.d(TAG, "description = " + description);
         } else if (qName.equalsIgnoreCase("guid")) {
             guid = tempValue.toString();
-            Log.d(TAG, "guid = " + guid);
         } else if (qName.equalsIgnoreCase("thumb_url")) {
             thumb_url = tempValue.toString();
-            Log.d(TAG, "thumb_url = " + thumb_url);
         } else if (qName.equalsIgnoreCase("url")) {
             imageUrl = tempValue.toString();
         } else if (qName.equalsIgnoreCase("pubDate")) {
-            dateString = tempValue.toString();
-            Log.d(TAG, "dateString = " + dateString);
+            String dateString = tempValue.toString();
             try {
                 pubDate = getDateFromString(dateString);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Log.d(TAG, "pubDate = " + pubDate);
         }
     }
 
