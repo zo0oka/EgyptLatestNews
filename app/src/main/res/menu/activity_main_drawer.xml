@@ -101,72 +101,73 @@
             <menu>
                 <item
                     android:id="@+id/nav_almasry_alyoum"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_almasry_alyoum"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_alwatan"
-                    android:icon="@mipmap/logo"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_alwatan"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_aldostour"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_aldostour"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_akhbarak"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_akhbarak"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_alwafd"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_alwafd"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_bbc_arabic"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_bbc_arabic"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_alfagr"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_alfagr"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_rose_alyousef"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_rose_alyousef"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_akhbar_elhawadeth"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_akhbar_elhawadeth"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_sada_elbalad"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_sada_elbalad"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_bawabet_veto"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_bawabet_veto"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_almogaz"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@drawable/ic_nav_website_icon"
                     android:title="@string/nav_almogaz"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
@@ -179,20 +180,8 @@
             </menu>
         </item>
     </group>
-    <item android:title="@string/nav_app_rating">
-        <menu>
-            <item
-                android:id="@+id/nav_app_rate"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/nav_app_rate" />
-        </menu>
-    </item>
     <item android:title="@string/nav_tools">
         <menu>
-            <item
-                android:id="@+id/nav_add_source"
-                android:icon="@drawable/ic_nav_add_source"
-                android:title="@string/nav_add_source" />
             <item
                 android:id="@+id/nav_sync_news"
                 android:icon="@drawable/ic_nav_sync"

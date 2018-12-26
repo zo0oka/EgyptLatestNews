@@ -31,6 +31,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
     private Article article;
     private ArticleViewModel articleViewModel;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
     private void loadAd() {
         MobileAds.initialize(this, Constants.ADMOB_APP_ID);
-        AdView mAdView = findViewById(R.id.article_detail_adView);
+        mAdView = findViewById(R.id.article_detail_adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
@@ -99,8 +100,6 @@ public class ArticleDetailActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         assert searchManager != null;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
-
         return true;
     }
 
@@ -118,5 +117,30 @@ public class ArticleDetailActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        mAdView.resume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        mAdView.resume();
+        super.onRestart();
+
     }
 }

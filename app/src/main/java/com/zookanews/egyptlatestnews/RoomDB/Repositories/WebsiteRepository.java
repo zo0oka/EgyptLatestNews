@@ -18,26 +18,8 @@ public class WebsiteRepository {
         websiteDao = db.websiteDao();
     }
 
-    public void insertWebsite(Website website) {
-        new insertWebsiteAsyncTask(websiteDao).execute(website);
-    }
-
     public Website getWebsiteByName(String websiteName) throws ExecutionException, InterruptedException {
         return new getWebsiteByNameAsyncTask(websiteDao).execute(websiteName).get();
-    }
-
-    private static class insertWebsiteAsyncTask extends AsyncTask<Website, Void, Void> {
-        private WebsiteDao asyncTaskDao;
-
-        insertWebsiteAsyncTask(WebsiteDao websiteDao) {
-            asyncTaskDao = websiteDao;
-        }
-
-        @Override
-        protected Void doInBackground(Website... websites) {
-            asyncTaskDao.insertWebsite(websites[0]);
-            return null;
-        }
     }
 
     private static class getWebsiteByNameAsyncTask extends AsyncTask<String, Void, Website> {

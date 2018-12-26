@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -43,7 +42,6 @@ public class ArticleWebViewActivity extends AppCompatActivity {
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                // Load the next interstitial.
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             }
 
@@ -74,10 +72,8 @@ public class ArticleWebViewActivity extends AppCompatActivity {
     }
 
     private void setWebViewSettings() {
-        //        webView = findViewById(R.id.article_web_view);
         webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
-//        webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(false);
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);
@@ -98,8 +94,6 @@ public class ArticleWebViewActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
         }
         super.onBackPressed();
     }

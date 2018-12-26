@@ -74,12 +74,11 @@ public class DbUpdateService extends IntentService {
         stopSelf();
     }
 
-    protected void showToast(final String msg) {
+    private void showToast(final String msg) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
-                // run this code in the main thread
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         });
@@ -91,11 +90,7 @@ public class DbUpdateService extends IntentService {
         Boolean vibrate = sharedPreferences.getBoolean(VIBRATE, true);
 
         Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        } else {
-            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         PendingIntent notificationPendingIntent = PendingIntent.getActivity(getApplicationContext(),
                 102, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);

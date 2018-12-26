@@ -82,7 +82,7 @@
         app:elevation="8dp"
         app:layout_constraintBottom_toTopOf="@+id/article_detail_adView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_menu_share" />
+        app:src="@drawable/ic_menu_share" />
 
 
 </android.support.constraint.ConstraintLayout>

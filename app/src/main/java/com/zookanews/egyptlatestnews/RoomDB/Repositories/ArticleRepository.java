@@ -22,10 +22,6 @@ public class ArticleRepository {
         allArticles = articleDao.getAllArticles();
     }
 
-    public long insertArticle(Article article) throws ExecutionException, InterruptedException {
-        return new insertArticleAsyncTask(articleDao).execute(article).get();
-    }
-
     public LiveData<List<Article>> getAllArticles() {
         return allArticles;
     }
@@ -38,34 +34,6 @@ public class ArticleRepository {
         return articleDao.getWebsiteArticles(websiteName);
     }
 
-    public List<Article> getUnreadArticles(Boolean isRead) throws ExecutionException, InterruptedException {
-        return new getUnreadArticlesAsyncTask(articleDao).execute(isRead).get();
-    }
-
-
-    public List<Article> getArticlesOlderthan() throws ExecutionException, InterruptedException {
-        return new getArticlesOlderThanAsyncTask(articleDao).execute().get();
-    }
-
-    public void deleteUnreadArticlesOlderThan(int noOfDays) {
-        new deleteUnreadArticlesOlderThanAsyncTask(articleDao).execute(noOfDays);
-    }
-
-    public void deleteReadArticlesOlderThan(int noOfDays) {
-        new deleteReadArticlesOlderThanAsyncTask(articleDao).execute(noOfDays);
-    }
-    public void deleteAllArticles() {
-        new deleteAllArticlesAsyncTask(articleDao).execute();
-    }
-
-    public void deleteUnreadArticles() {
-        new deleteUnreadArticlesAsyncTask(articleDao).execute();
-    }
-
-    public void deleteReadArticles() {
-        new deleteReadArticlesAsyncTask(articleDao).execute();
-    }
-
     public void updateReadStatus(int articleId, Boolean isRead) {
         Params params = new Params(articleId, isRead);
         new updateReadStatusAsyncTask(articleDao).execute(params);
@@ -76,10 +44,6 @@ public class ArticleRepository {
         new updateFavoriteStatusAsyncTask(articleDao).execute(params);
     }
 
-    public void setAllAsRead() {
-        new setAllAsReadAsyncTask(articleDao).execute();
-    }
-
     public Article getArticleById(int articleId) throws ExecutionException, InterruptedException {
         Params params = new Params(articleId);
         return new getArticleByIdAsyncTask(articleDao).execute(params).get();
@@ -87,10 +51,6 @@ public class ArticleRepository {
 
     public List<Article> searchResultArticles(String searchQuery) throws ExecutionException, InterruptedException {
         return new searchResultArticlesAsyncTask(articleDao).execute(searchQuery).get();
-    }
-
-    public List<Article> getReadArticles() throws ExecutionException, InterruptedException {
-        return new getReadArticlesAsyncTask(articleDao).execute().get();
     }
 
     public List<Article> getFavoriteArticles() throws ExecutionException, InterruptedException {
@@ -103,81 +63,6 @@ public class ArticleRepository {
 
     public LiveData<Integer> getCountOfWebsiteUnreadArticles(String websiteName) {
         return articleDao.getCountOfWebsiteUnreadArticles(websiteName);
-    }
-
-    private static class insertArticleAsyncTask extends AsyncTask<Article, Void, Long> {
-        private ArticleDao asyncTaskDao;
-
-        insertArticleAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected Long doInBackground(Article... articles) {
-            return asyncTaskDao.insertArticle(articles[0]);
-
-        }
-    }
-
-    private static class getUnreadArticlesAsyncTask extends AsyncTask<Boolean, Void, List<Article>> {
-        private ArticleDao asyncTaskDao;
-
-        getUnreadArticlesAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected List<Article> doInBackground(Boolean... booleans) {
-            List<Article> articles;
-            articles = asyncTaskDao.getUnreadArticles(booleans[0]);
-            if (articles == null) {
-                articles.add(new Article(null, "http://", "No new article!", null,
-                        null, null, null, false, false));
-            }
-            return articles;
-        }
-    }
-
-    private static class deleteAllArticlesAsyncTask extends AsyncTask<Void, Void, Void> {
-        private ArticleDao asyncTaskDao;
-
-        deleteAllArticlesAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            asyncTaskDao.deleteAllArticles();
-            return null;
-        }
-    }
-
-    private static class deleteUnreadArticlesAsyncTask extends AsyncTask<Void, Void, Void> {
-        private ArticleDao asyncTaskDao;
-
-        deleteUnreadArticlesAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            asyncTaskDao.deleteUnreadArticles();
-            return null;
-        }
-    }
-
-    private static class deleteReadArticlesAsyncTask extends AsyncTask<Void, Void, Void> {
-        private ArticleDao asyncTaskDao;
-
-        deleteReadArticlesAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            asyncTaskDao.deleteReadArticles();
-            return null;
-        }
     }
 
     private static class updateReadStatusAsyncTask extends AsyncTask<Params, Void, Void> {
@@ -217,74 +102,6 @@ public class ArticleRepository {
         @Override
         protected List<Article> doInBackground(String... strings) {
             return asyncTaskDao.searchResultArticles(strings[0]);
-        }
-    }
-
-    private static class getReadArticlesAsyncTask extends AsyncTask<Void, Void, List<Article>> {
-        private ArticleDao asyncTaskDao;
-
-        getReadArticlesAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected List<Article> doInBackground(Void... voids) {
-            return asyncTaskDao.getReadArticles();
-        }
-    }
-
-    private static class setAllAsReadAsyncTask extends AsyncTask<Void, Void, Void> {
-        private ArticleDao asyncTaskDao;
-
-        setAllAsReadAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            asyncTaskDao.setAllAsRead();
-            return null;
-        }
-    }
-
-    private static class getArticlesOlderThanAsyncTask extends AsyncTask<Void, Void, List<Article>> {
-        ArticleDao asyncTaskDao;
-
-        getArticlesOlderThanAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected List<Article> doInBackground(Void... voids) {
-            return asyncTaskDao.getArticlesOlderThan();
-        }
-    }
-
-    private static class deleteUnreadArticlesOlderThanAsyncTask extends AsyncTask<Integer, Void, Void> {
-        ArticleDao asyncTaskDao;
-
-        deleteUnreadArticlesOlderThanAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected Void doInBackground(Integer... integers) {
-            asyncTaskDao.deleteUnreadArticlesOlderThan(integers[0]);
-            return null;
-        }
-    }
-
-    private static class deleteReadArticlesOlderThanAsyncTask extends AsyncTask<Integer, Void, Void> {
-        ArticleDao asyncTaskDao;
-
-        deleteReadArticlesOlderThanAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected Void doInBackground(Integer... integers) {
-            asyncTaskDao.deleteReadArticlesOlderThan(integers[0]);
-            return null;
         }
     }
 

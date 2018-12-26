@@ -17,11 +17,6 @@ public class CategoryViewModel extends AndroidViewModel {
         super(application);
         categoryRepository = new CategoryRepository(application);
     }
-
-    public void insertCategory(Category category) {
-        categoryRepository.insertCategory(category);
-    }
-
     public Category getCategoryByName(String categoryName) throws ExecutionException, InterruptedException {
         return categoryRepository.getCategoryByName(categoryName);
     }

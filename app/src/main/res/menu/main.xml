@@ -15,24 +15,4 @@
         android:title="@string/favorite"
         android:visible="false"
         app:showAsAction="always" />
-    <!--<item-->
-    <!--android:id="@+id/action_hide_read"-->
-    <!--android:orderInCategory="200"-->
-    <!--android:title="@string/hide_read"-->
-    <!--app:showAsAction="never" />-->
-    <!--<item-->
-    <!--android:id="@+id/action_mark_all_read"-->
-    <!--android:orderInCategory="300"-->
-    <!--android:title="@string/mark_all_read"-->
-    <!--app:showAsAction="never" />-->
-    <!--<item-->
-    <!--android:id="@+id/action_delete_all"-->
-    <!--android:orderInCategory="400"-->
-    <!--android:title="@string/delete_all"-->
-    <!--app:showAsAction="never" />-->
-    <!--<item-->
-    <!--android:id="@+id/action_delete_all_read"-->
-    <!--android:orderInCategory="500"-->
-    <!--android:title="@string/delete_all_read"-->
-    <!--app:showAsAction="never" />-->
 </menu>

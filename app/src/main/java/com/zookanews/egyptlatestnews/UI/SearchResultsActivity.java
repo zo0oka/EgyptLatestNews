@@ -11,8 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.zookanews.egyptlatestnews.R;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
@@ -25,6 +27,9 @@ import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
+    private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +37,21 @@ public class SearchResultsActivity extends AppCompatActivity {
         handleIntent(getIntent());
 
         MobileAds.initialize(this, ADMOB_APP_ID);
-        AdView mAdView = findViewById(R.id.search_result_adView);
+        mAdView = findViewById(R.id.search_result_adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+        MobileAds.initialize(this, ADMOB_APP_ID);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+
+        });
 
     }
 
@@ -72,13 +89,45 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         assert searchManager != null;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
         return true;
     }
+
+    @Override
+    protected void onDestroy() {
+        mAdView.destroy();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        mAdView.pause();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        mAdView.resume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        mAdView.resume();
+        super.onRestart();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+        super.onBackPressed();
+    }
+
 }

@@ -64,7 +64,7 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
 
     public abstract WebsiteDao websiteDao();
 
-    public static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
+    static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 
         private final CategoryDao categoryDao;
         private final FeedDao feedDao;

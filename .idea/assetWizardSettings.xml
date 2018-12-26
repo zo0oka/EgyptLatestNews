@@ -85,7 +85,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/toggle/ic_star_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_subject_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -96,7 +96,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="d32f2f" />
-                            <entry key="outputName" value="ic_nav_favorite" />
+                            <entry key="outputName" value="ic_nav_website_icon" />
                             <entry key="sourceFile" value="C:\Users\Zo0oKaDev" />
                           </map>
                         </option>

@@ -26,10 +26,6 @@ public class ArticleViewModel extends AndroidViewModel {
         return allArticles;
     }
 
-    public long insertArticle(Article article) throws ExecutionException, InterruptedException {
-        return articleRepository.insertArticle(article);
-    }
-
     public LiveData<List<Article>> getCategoryArticles(String categoryName) {
         return articleRepository.getCategoryArticles(categoryName);
     }
@@ -38,28 +34,8 @@ public class ArticleViewModel extends AndroidViewModel {
         return articleRepository.getWebsiteArticles(websiteName);
     }
 
-    public void setAllAsRead() {
-        articleRepository.setAllAsRead();
-    }
-
-    public List<Article> getUnreadArticles(Boolean isRead) throws ExecutionException, InterruptedException {
-        return articleRepository.getUnreadArticles(isRead);
-    }
-
     public Article getArticleById(int articleId) throws ExecutionException, InterruptedException {
         return articleRepository.getArticleById(articleId);
-    }
-
-    public void deleteReadArticles() {
-        articleRepository.deleteReadArticles();
-    }
-
-    public void deleteUnreadArticles() {
-        articleRepository.deleteUnreadArticles();
-    }
-
-    public void deleteAllArticles() {
-        articleRepository.deleteAllArticles();
     }
 
     public void updateReadStatus(int articleId, Boolean isRead) {
@@ -74,24 +50,8 @@ public class ArticleViewModel extends AndroidViewModel {
         articleRepository.updateFavoriteStatus(articleId, isFavorite);
     }
 
-    public List<Article> getReadArticles() throws ExecutionException, InterruptedException {
-        return articleRepository.getReadArticles();
-    }
-
     public List<Article> getFavoriteArticles() throws ExecutionException, InterruptedException {
         return articleRepository.getFavoriteArticles();
-    }
-
-    public List<Article> getArticlesOlderThan() throws ExecutionException, InterruptedException {
-        return articleRepository.getArticlesOlderthan();
-    }
-
-    public void deleteUnreadArticlesOlderThan(int noOfDays) {
-        articleRepository.deleteUnreadArticlesOlderThan(noOfDays);
-    }
-
-    public void deleteReadArticlesOlderThan(int noOfDays) {
-        articleRepository.deleteReadArticlesOlderThan(noOfDays);
     }
 
     public LiveData<Integer> getCountOfCategoryUnreadArticles(String categoryName) {

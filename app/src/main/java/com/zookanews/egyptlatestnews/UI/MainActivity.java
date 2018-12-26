@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,7 +64,7 @@ import static com.zookanews.egyptlatestnews.Helpers.Constants.websiteNames;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    public SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ArticleViewModel articleViewModel;
     private AdView mAdView;
     private ArticlesAdapter articlesAdapter;
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
 
         toggle.syncState();
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout_main);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.secondaryColor));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -234,15 +235,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void startSyncService() {
+    private void startSyncService() {
         Intent serviceIntent = new Intent(this, DbUpdateService.class);
         serviceIntent.setAction("sync_DB");
-        startService(serviceIntent);
-//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-//            startForegroundService(serviceIntent);
-//        } else {
-//            startService(serviceIntent);
-//        }
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
+        }
     }
 
     @Override
@@ -272,18 +272,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         assert searchManager != null;
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
-
         return true;
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         final int id = item.getItemId();
@@ -351,6 +347,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
         } else if (id == R.id.nav_privacy_policy) {
+
         } else if (id == R.id.nav_favorites) {
             getFavoriteArticles();
         }

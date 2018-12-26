@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class SaxXmlHandler extends DefaultHandler {
+class SaxXmlHandler extends DefaultHandler {
     private StringBuilder tempValue = new StringBuilder();
     private List<Article> articles;
     private String link, title, description, imgSrc, guid, enclosure, thumb_url, mediaThumbnail, articleLink, articleThumbnailUrl, imageUrl;

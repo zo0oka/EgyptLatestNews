@@ -9,7 +9,6 @@
     tools:context=".UI.WebsiteArticlesActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/website_swipe_refresh_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"

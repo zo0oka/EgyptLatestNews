@@ -18,10 +18,6 @@ public class WebsiteViewModel extends AndroidViewModel {
         websiteRepository = new WebsiteRepository(application);
     }
 
-    public void insertWebsite(Website website) {
-        websiteRepository.insertWebsite(website);
-    }
-
     public Website getWebsiteByName(String websiteName) throws ExecutionException, InterruptedException {
         return websiteRepository.getWebsiteByName(websiteName);
     }

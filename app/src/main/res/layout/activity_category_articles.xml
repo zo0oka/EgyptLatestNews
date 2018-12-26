@@ -9,7 +9,7 @@
     tools:context=".UI.CategoryArticlesActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/category_swipe_refresh_layout"
+        android:id="@+id/swipe_refresh_layout_category"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
