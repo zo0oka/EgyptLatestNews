@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Website;
 import com.zookanews.egyptlatestnews.RoomDB.Repositories.WebsiteRepository;
 
+import java.util.concurrent.ExecutionException;
+
 public class WebsiteViewModel extends AndroidViewModel {
 
     private final WebsiteRepository websiteRepository;
@@ -18,5 +20,9 @@ public class WebsiteViewModel extends AndroidViewModel {
 
     public void insertWebsite(Website website) {
         websiteRepository.insertWebsite(website);
+    }
+
+    public Website getWebsiteByName(String websiteName) throws ExecutionException, InterruptedException {
+        return websiteRepository.getWebsiteByName(websiteName);
     }
 }

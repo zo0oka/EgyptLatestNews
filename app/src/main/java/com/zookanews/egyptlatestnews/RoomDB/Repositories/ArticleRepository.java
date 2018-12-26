@@ -15,7 +15,6 @@ import java.util.concurrent.ExecutionException;
 public class ArticleRepository {
     private final ArticleDao articleDao;
     private LiveData<List<Article>> allArticles;
-    private LiveData<Integer> unreadArticles;
 
     public ArticleRepository(Application application) {
         FeedRoomDatabase db = FeedRoomDatabase.getDatabase(application);
@@ -31,12 +30,12 @@ public class ArticleRepository {
         return allArticles;
     }
 
-    public List<Article> getCategoryArticles(String categoryName) throws ExecutionException, InterruptedException {
-        return new getCategoryArticlesAsyncTask(articleDao).execute(categoryName).get();
+    public LiveData<List<Article>> getCategoryArticles(String categoryName) {
+        return articleDao.getCategoryArticles(categoryName);
     }
 
-    public List<Article> getWebsiteArticles(String websiteName) throws ExecutionException, InterruptedException {
-        return new getWebsiteArticlesAsyncTask(articleDao).execute(websiteName).get();
+    public LiveData<List<Article>> getWebsiteArticles(String websiteName) {
+        return articleDao.getWebsiteArticles(websiteName);
     }
 
     public List<Article> getUnreadArticles(Boolean isRead) throws ExecutionException, InterruptedException {
@@ -117,32 +116,6 @@ public class ArticleRepository {
         protected Long doInBackground(Article... articles) {
             return asyncTaskDao.insertArticle(articles[0]);
 
-        }
-    }
-
-    private static class getCategoryArticlesAsyncTask extends AsyncTask<String, Void, List<Article>> {
-        private ArticleDao asyncTaskDao;
-
-        getCategoryArticlesAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected List<Article> doInBackground(String... strings) {
-            return asyncTaskDao.getCategoryArticles(strings[0]);
-        }
-    }
-
-    private static class getWebsiteArticlesAsyncTask extends AsyncTask<String, Void, List<Article>> {
-        private ArticleDao asyncTaskDao;
-
-        getWebsiteArticlesAsyncTask(ArticleDao articleDao) {
-            asyncTaskDao = articleDao;
-        }
-
-        @Override
-        protected List<Article> doInBackground(String... strings) {
-            return asyncTaskDao.getWebsiteArticles(strings[0]);
         }
     }
 
@@ -331,7 +304,7 @@ public class ArticleRepository {
     private static class updateFavoriteStatusAsyncTask extends AsyncTask<Params, Void, Void> {
         ArticleDao asyncTaskDao;
 
-        public updateFavoriteStatusAsyncTask(ArticleDao articleDao) {
+        updateFavoriteStatusAsyncTask(ArticleDao articleDao) {
             asyncTaskDao = articleDao;
         }
 

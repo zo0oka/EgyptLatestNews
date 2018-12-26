@@ -2,7 +2,9 @@ package com.zookanews.egyptlatestnews.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -26,6 +28,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     private final ArticleViewModel articleViewModel;
     private List<Article> articles;
     private Context context;
+    private SharedPreferences sharedPreferences;
 
     ArticlesAdapter(Context context, ArticleViewModel articleViewModel) {
         this.context = context;
@@ -68,6 +71,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
             @Override
             public void onClick(View v) {
                 articleViewModel.updateReadStatus(article.getArticleId(), true);
+                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+                sharedPreferences.edit().putInt("article_id", article.getArticleId()).apply();
                 Intent intent = new Intent(context, ArticleDetailActivity.class);
                 intent.putExtra("articleId", article.getArticleId());
                 context.startActivity(intent);

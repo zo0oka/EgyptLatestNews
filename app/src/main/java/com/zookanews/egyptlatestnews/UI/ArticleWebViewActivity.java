@@ -1,9 +1,10 @@
 package com.zookanews.egyptlatestnews.UI;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ public class ArticleWebViewActivity extends AppCompatActivity {
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
     private Article article;
+    private SharedPreferences sharedPreferences;
 
 
 
@@ -60,13 +62,15 @@ public class ArticleWebViewActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        setTitle(article.getArticleTitle());
 
     }
 
     private void loadUrlInWebView() throws ExecutionException, InterruptedException {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int articleId = sharedPreferences.getInt("article_id", 0);
         ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
-        article = articleViewModel.getArticleById(getIntent().getExtras().getInt("article_id"));
+        article = articleViewModel.getArticleById(articleId);
         String url = article.getArticleLink();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             webView.getWebChromeClient();
@@ -97,14 +101,11 @@ public class ArticleWebViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("articleId", article.getArticleId());
-        finish();
-        super.onBackPressed();
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         } else {
             Log.d("TAG", "The interstitial wasn't loaded yet.");
         }
+        super.onBackPressed();
     }
 }

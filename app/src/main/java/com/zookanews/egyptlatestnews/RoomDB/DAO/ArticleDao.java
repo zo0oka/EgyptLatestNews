@@ -19,10 +19,10 @@ public interface ArticleDao {
     LiveData<List<Article>> getAllArticles();
 
     @Query("SELECT * FROM articles_table WHERE category_name = :categoryName ORDER BY date DESC")
-    List<Article> getCategoryArticles(String categoryName);
+    LiveData<List<Article>> getCategoryArticles(String categoryName);
 
     @Query("SELECT * FROM articles_table WHERE website_name = :websiteName ORDER BY date DESC")
-    List<Article> getWebsiteArticles(String websiteName);
+    LiveData<List<Article>> getWebsiteArticles(String websiteName);
 
     @Query("SELECT * FROM articles_table WHERE isRead = :isRead ORDER BY date DESC")
     List<Article> getUnreadArticles(Boolean isRead);

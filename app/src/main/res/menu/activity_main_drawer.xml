@@ -106,7 +106,7 @@
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_alwatan"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@mipmap/logo"
                     android:title="@string/nav_alwatan"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />
@@ -172,7 +172,7 @@
                     app:showAsAction="always" />
                 <item
                     android:id="@+id/nav_favorites"
-                    android:icon="@drawable/ic_nav_accidents"
+                    android:icon="@drawable/ic_nav_favorite"
                     android:title="@string/nav_favorites"
                     app:actionViewClass="android.widget.TextView"
                     app:showAsAction="always" />

@@ -30,11 +30,11 @@ public class ArticleViewModel extends AndroidViewModel {
         return articleRepository.insertArticle(article);
     }
 
-    public List<Article> getCategoryArticles(String categoryName) throws ExecutionException, InterruptedException {
+    public LiveData<List<Article>> getCategoryArticles(String categoryName) {
         return articleRepository.getCategoryArticles(categoryName);
     }
 
-    public List<Article> getWebsiteArticles(String websiteName) throws ExecutionException, InterruptedException {
+    public LiveData<List<Article>> getWebsiteArticles(String websiteName) {
         return articleRepository.getWebsiteArticles(websiteName);
     }
 

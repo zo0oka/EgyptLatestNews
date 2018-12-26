@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadAd();
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         getSharedPrefValues(sharedPreferences);
         registerSyncOnStartupWorker(syncOnStartup, wifiForDownload);
         registerDBSyncWorker(backgroundSync, syncFrequency, wifiForDownload);
@@ -415,23 +415,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getWebsiteArticles(String websiteName) {
-        try {
-            articlesAdapter.setArticles(articleViewModel.getWebsiteArticles(websiteName));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        Intent websiteIntent = new Intent(MainActivity.this, WebsiteArticlesActivity.class);
+        websiteIntent.putExtra("website_name", websiteName);
+        startActivity(websiteIntent);
     }
 
     private void getCategoryArticles(String categoryName) {
-        try {
-            articlesAdapter.setArticles(articleViewModel.getCategoryArticles(categoryName));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Intent categoryIntent = new Intent(MainActivity.this, CategoryArticlesActivity.class);
+        categoryIntent.putExtra("category_name", categoryName);
+        startActivity(categoryIntent);
     }
 
     @Override

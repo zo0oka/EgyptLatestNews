@@ -41,10 +41,10 @@ public class ArticleDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_detail);
 
-            receivedArticleId = getIntent().getExtras().getInt(articleId);
+//            receivedArticleId = getIntent().getExtras().getInt(articleId);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        sharedPreferences.edit().putInt("article_id", receivedArticleId).apply();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        receivedArticleId = sharedPreferences.getInt("article_id", 0);
 
         articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
         try {
@@ -54,6 +54,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        setTitle(article.getArticleTitle());
         TextView articleTitle = findViewById(R.id.article_title_text_view);
         assert article != null;
         articleTitle.setText(article.getArticleTitle());
