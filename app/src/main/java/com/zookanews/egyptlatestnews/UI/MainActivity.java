@@ -183,12 +183,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
-
-        final TextView counter = (TextView) navigationView.getMenu().findItem(R.id.nav_almasry_alyoum).getActionView();
-        counter.setGravity(Gravity.CENTER_VERTICAL);
-
-
-
     }
 
     private void loadAd() {
