@@ -2,6 +2,7 @@ package com.zookanews.egyptlatestnews.UI;
 
 import android.app.SearchManager;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -98,8 +99,9 @@ public class ArticleDetailActivity extends AppCompatActivity {
         }
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        ComponentName componentName = new ComponentName(this, SearchResultsActivity.class);
         assert searchManager != null;
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
         return true;
     }
 

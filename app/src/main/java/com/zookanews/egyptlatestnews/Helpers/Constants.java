@@ -28,6 +28,6 @@ public class Constants {
     public static final int[] websiteMenuIds = {R.id.nav_almasry_alyoum, R.id.nav_alwatan, R.id.nav_aldostour, R.id.nav_akhbarak,
             R.id.nav_alwafd, R.id.nav_bbc_arabic, R.id.nav_alfagr, R.id.nav_rose_alyousef, R.id.nav_akhbar_elhawadeth,
             R.id.nav_sada_elbalad, R.id.nav_bawabet_veto, R.id.nav_almogaz};
-
+    public static final String ADMOB_INTERTITIALAD_UNIT_ID = "ca-app-pub-4040319527918836/4947968954";
 
 }

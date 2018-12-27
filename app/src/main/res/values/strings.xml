@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Egypt Latest News</string>
+    <string name="app_name">أحدث أخبار مصر</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="view_article_on_website">قرأة الموضوع كاملا</string>
@@ -51,7 +51,7 @@
     <string name="pref_summary_wifi_only_for_download">Sync news only when Wi-Fi is connected</string>
     <string name="pref_title_keep_unread_articles">Keep unread articles</string>
     <string name="pref_title_auto_cleanup_read">Auto cleanup read</string>
-    <string name="pref_summary_auto_cleanup_read">Auto cleanup unread articles older than selected days</string>
+    <string name="pref_summary_auto_cleanup_read">Auto cleanup read articles older than selected days</string>
     <string name="pref_title_auto_cleanup_unread">Auto cleanup unread</string>
     <string name="pref_summary_auto_cleanup_unread">Auto cleanup unread articles older than selected days</string>
     <string name="pref_title_new_article_notifications">New article notifications</string>
@@ -69,5 +69,5 @@
     <string name="favorite">Favorite</string>
     <string name="favorite_icon">Favorite icon</string>
     <string name="nav_favorites">الاخبار المفضلة</string>
-
+    <string name="admob_banner_adunit_id">ca-app-pub-4040319527918836/3247703038</string>
 </resources>

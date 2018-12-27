@@ -3,6 +3,7 @@ package com.zookanews.egyptlatestnews.UI;
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
+import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_INTERTITIALAD_UNIT_ID;
 
 public class CategoryArticlesActivity extends AppCompatActivity {
 
@@ -49,7 +51,7 @@ public class CategoryArticlesActivity extends AppCompatActivity {
 
         MobileAds.initialize(this, ADMOB_APP_ID);
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId(ADMOB_INTERTITIALAD_UNIT_ID);
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -116,8 +118,9 @@ public class CategoryArticlesActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        ComponentName componentName = new ComponentName(this, SearchResultsActivity.class);
         assert searchManager != null;
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
         return true;
     }
 

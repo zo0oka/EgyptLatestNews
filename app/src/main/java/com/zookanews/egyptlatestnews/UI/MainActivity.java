@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -275,8 +276,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getMenuInflater().inflate(R.menu.main, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        ComponentName componentName = new ComponentName(this, SearchResultsActivity.class);
         assert searchManager != null;
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
         return true;
     }
 
@@ -334,9 +336,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_rose_alyousef) {
             getWebsiteArticles("rose_alyousef");
         } else if (id == R.id.nav_akhbar_elhawadeth) {
-            getWebsiteArticles("akhbar_elhawadeth");
+            getWebsiteArticles("akhbar_alhawadeth");
         } else if (id == R.id.nav_sada_elbalad) {
-            getWebsiteArticles("sada_elbalad");
+            getWebsiteArticles("sada_albalad");
         } else if (id == R.id.nav_bawabet_veto) {
             getWebsiteArticles("bawabet_veto");
         } else if (id == R.id.nav_almogaz) {
@@ -347,7 +349,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
         } else if (id == R.id.nav_privacy_policy) {
-
+            Intent privacyIntent = new Intent(this, PrivacyPolicyActivity.class);
+            startActivity(privacyIntent);
         } else if (id == R.id.nav_favorites) {
             getFavoriteArticles();
         }
