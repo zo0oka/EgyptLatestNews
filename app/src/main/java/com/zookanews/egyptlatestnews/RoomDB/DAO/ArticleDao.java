@@ -25,7 +25,7 @@ public interface ArticleDao {
     LiveData<List<Article>> getWebsiteArticles(String websiteName);
 
     @Query("SELECT * FROM articles_table WHERE isFavorite = 1 ORDER BY date DESC")
-    List<Article> getFavoriteArticles();
+    LiveData<List<Article>> getFavoriteArticles();
 
     @Query("UPDATE articles_table SET isRead = :isRead WHERE ID = :articleId")
     void updateReadStatus(int articleId, Boolean isRead);

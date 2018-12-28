@@ -5,29 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e2e2e2"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".UI.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:context=".UI.FavoriteArticlesActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout_main"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/favorite_articles_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_activity_adView"
+        android:background="#e2e2e2"
+        app:layout_constraintBottom_toTopOf="@+id/favorite_articles_adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#e2e2e2" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/main_activity_adView"
+        android:id="@+id/favorite_articles_adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -53,7 +53,7 @@ public class ArticleRepository {
         return new searchResultArticlesAsyncTask(articleDao).execute(searchQuery).get();
     }
 
-    public List<Article> getFavoriteArticles() throws ExecutionException, InterruptedException {
+    public LiveData<List<Article>> getFavoriteArticles() throws ExecutionException, InterruptedException {
         return new getFavoriteArticlesAsyncTask(articleDao).execute().get();
     }
 
@@ -119,7 +119,7 @@ public class ArticleRepository {
         }
     }
 
-    private static class getFavoriteArticlesAsyncTask extends AsyncTask<Void, Void, List<Article>> {
+    private static class getFavoriteArticlesAsyncTask extends AsyncTask<Void, Void, LiveData<List<Article>>> {
         private ArticleDao asyncTaskDao;
 
         getFavoriteArticlesAsyncTask(ArticleDao articleDao) {
@@ -127,7 +127,7 @@ public class ArticleRepository {
         }
 
         @Override
-        protected List<Article> doInBackground(Void... voids) {
+        protected LiveData<List<Article>> doInBackground(Void... voids) {
             return asyncTaskDao.getFavoriteArticles();
         }
     }

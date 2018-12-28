@@ -41,7 +41,6 @@ import com.zookanews.egyptlatestnews.WorkManager.DeleteReadArticlesWorker;
 import com.zookanews.egyptlatestnews.WorkManager.DeleteUnreadArticlesWorker;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import androidx.work.Constraints;
@@ -360,13 +359,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getFavoriteArticles() {
-        try {
-            articlesAdapter.setArticles(articleViewModel.getFavoriteArticles());
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Intent favoritesIntent = new Intent(MainActivity.this, FavoriteArticlesActivity.class);
+        startActivity(favoritesIntent);
     }
 
     private void getWebsiteArticles(String websiteName) {

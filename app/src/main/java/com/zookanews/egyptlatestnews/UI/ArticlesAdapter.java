@@ -51,6 +51,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
             articlesViewHolder.isRead.setImageResource(R.drawable.ic_read);
         } else {
             articlesViewHolder.isRead.setImageResource(R.drawable.ic_unread);
+            articlesViewHolder.title.setTextColor(Color.parseColor("#d32f2f"));
         }
         if (article.getIsFavorite()) {
             articlesViewHolder.isFavorite.setImageResource(R.drawable.ic_action_favorite_checked);
@@ -95,6 +96,10 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     void setArticles(List<Article> articles) {
         this.articles = articles;
         notifyDataSetChanged();
+    }
+
+    public Article getArticleAtPosition(int position) {
+        return articles.get(position);
     }
 
     @Override

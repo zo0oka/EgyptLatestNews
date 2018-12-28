@@ -50,7 +50,7 @@ public class ArticleViewModel extends AndroidViewModel {
         articleRepository.updateFavoriteStatus(articleId, isFavorite);
     }
 
-    public List<Article> getFavoriteArticles() throws ExecutionException, InterruptedException {
+    public LiveData<List<Article>> getFavoriteArticles() throws ExecutionException, InterruptedException {
         return articleRepository.getFavoriteArticles();
     }
 
