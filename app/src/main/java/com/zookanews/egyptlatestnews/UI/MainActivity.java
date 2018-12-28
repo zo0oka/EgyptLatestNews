@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAdView = findViewById(R.id.main_activity_adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
     }
 
     private void registerSyncOnStartupWorker(Boolean syncOnStartup, Boolean wifiForDownload) {
