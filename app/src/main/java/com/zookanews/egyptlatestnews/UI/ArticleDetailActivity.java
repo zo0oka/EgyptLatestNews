@@ -45,6 +45,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
         articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
         try {
             article = articleViewModel.getArticleById(receivedArticleId);
+            articleViewModel.updateReadStatus(receivedArticleId, true);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

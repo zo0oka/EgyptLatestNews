@@ -71,7 +71,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         articlesViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                articleViewModel.updateReadStatus(article.getArticleId(), true);
                 sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
                 sharedPreferences.edit().putInt("article_id", article.getArticleId()).apply();
                 Intent intent = new Intent(context, ArticleDetailActivity.class);
