@@ -50,6 +50,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         android:text="@string/view_article_on_website"
         app:layout_constraintBottom_toTopOf="@+id/article_detail_adView"
         app:layout_constraintEnd_toEndOf="parent"
