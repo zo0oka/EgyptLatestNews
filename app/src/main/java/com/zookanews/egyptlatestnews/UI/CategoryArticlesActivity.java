@@ -1,19 +1,11 @@
 package com.zookanews.egyptlatestnews.UI;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 
 import com.google.android.gms.ads.AdListener;
@@ -31,6 +23,15 @@ import com.zookanews.egyptlatestnews.UpdateService.DbUpdateService;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_INTERTITIALAD_UNIT_ID;
@@ -74,7 +75,7 @@ public class CategoryArticlesActivity extends AppCompatActivity {
         CategoryViewModel categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
         RecyclerView recyclerView = findViewById(R.id.category_recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         articlesAdapter = new ArticlesAdapter(this, articleViewModel);
         recyclerView.setAdapter(articlesAdapter);
 

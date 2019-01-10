@@ -1,7 +1,6 @@
 package com.zookanews.egyptlatestnews.RoomDB.Repositories;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import com.zookanews.egyptlatestnews.Helpers.Params;
@@ -11,6 +10,8 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import androidx.lifecycle.LiveData;
 
 public class ArticleRepository {
     private final ArticleDao articleDao;

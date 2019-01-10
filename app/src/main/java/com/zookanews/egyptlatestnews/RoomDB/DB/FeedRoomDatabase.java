@@ -1,13 +1,7 @@
 package com.zookanews.egyptlatestnews.RoomDB.DB;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 
 import com.zookanews.egyptlatestnews.Parser.SaxXmlParser;
 import com.zookanews.egyptlatestnews.RoomDB.DAO.ArticleDao;
@@ -18,6 +12,13 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Category;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Feed;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Website;
+
+import androidx.annotation.NonNull;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Article.class, Category.class, Feed.class, Website.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)

@@ -1,16 +1,12 @@
 package com.zookanews.egyptlatestnews.UI;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,12 +17,17 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zookanews.egyptlatestnews.Helpers.Constants;
 import com.zookanews.egyptlatestnews.R;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
 import java.util.concurrent.ExecutionException;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProviders;
 
 public class ArticleDetailActivity extends AppCompatActivity {
 

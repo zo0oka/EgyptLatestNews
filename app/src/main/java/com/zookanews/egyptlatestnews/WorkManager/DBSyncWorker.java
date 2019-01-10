@@ -9,10 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.preference.PreferenceManager;
 
 import com.zookanews.egyptlatestnews.Parser.SaxXmlParser;
 import com.zookanews.egyptlatestnews.R;
@@ -26,6 +22,10 @@ import com.zookanews.egyptlatestnews.UI.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.preference.PreferenceManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 

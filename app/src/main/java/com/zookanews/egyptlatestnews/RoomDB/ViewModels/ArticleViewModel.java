@@ -1,15 +1,16 @@
 package com.zookanews.egyptlatestnews.RoomDB.ViewModels;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
 
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.Repositories.ArticleRepository;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 public class ArticleViewModel extends AndroidViewModel {
 

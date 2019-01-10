@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -22,6 +20,9 @@ import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
 import java.util.Calendar;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticlesViewHolder> {
 
@@ -97,7 +98,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         notifyDataSetChanged();
     }
 
-    public Article getArticleAtPosition(int position) {
+    Article getArticleAtPosition(int position) {
         return articles.get(position);
     }
 

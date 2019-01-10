@@ -1,11 +1,9 @@
 package com.zookanews.egyptlatestnews.UI;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +17,9 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
 import java.util.concurrent.ExecutionException;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_INTERTITIALAD_UNIT_ID;

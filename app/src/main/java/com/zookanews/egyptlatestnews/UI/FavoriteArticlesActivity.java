@@ -1,18 +1,9 @@
 package com.zookanews.egyptlatestnews.UI;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 
 import com.google.android.gms.ads.AdRequest;
@@ -25,6 +16,16 @@ import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class FavoriteArticlesActivity extends AppCompatActivity {
 
@@ -41,7 +42,7 @@ public class FavoriteArticlesActivity extends AppCompatActivity {
         final ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
         RecyclerView recyclerView = findViewById(R.id.favorite_articles_recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         articlesAdapter = new ArticlesAdapter(this, articleViewModel);
         recyclerView.setAdapter(articlesAdapter);
 

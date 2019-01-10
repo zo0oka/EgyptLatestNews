@@ -12,8 +12,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.zookanews.egyptlatestnews.Parser.SaxXmlParser;
@@ -27,6 +25,9 @@ import com.zookanews.egyptlatestnews.UI.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.app.NotificationCompat;
+import androidx.preference.PreferenceManager;
 
 import static com.zookanews.egyptlatestnews.Helpers.Constants.LIGHT;
 import static com.zookanews.egyptlatestnews.Helpers.Constants.NOTIFICATION_CHANNEL_ID;

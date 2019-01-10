@@ -1,13 +1,14 @@
 package com.zookanews.egyptlatestnews.RoomDB.ViewModels;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.support.annotation.NonNull;
 
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Category;
 import com.zookanews.egyptlatestnews.RoomDB.Repositories.CategoryRepository;
 
 import java.util.concurrent.ExecutionException;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 
 public class CategoryViewModel extends AndroidViewModel {
 

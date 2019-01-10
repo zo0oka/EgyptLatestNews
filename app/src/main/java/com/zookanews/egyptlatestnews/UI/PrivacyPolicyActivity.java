@@ -2,7 +2,6 @@ package com.zookanews.egyptlatestnews.UI;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -12,6 +11,8 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_INTERTITIALAD_UNIT_ID;

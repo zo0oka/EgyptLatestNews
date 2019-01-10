@@ -1,15 +1,10 @@
 package com.zookanews.egyptlatestnews.UI;
 
 import android.app.SearchManager;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 
 import com.google.android.gms.ads.AdListener;
@@ -23,6 +18,12 @@ import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_APP_ID;
 import static com.zookanews.egyptlatestnews.Helpers.Constants.ADMOB_INTERTITIALAD_UNIT_ID;
@@ -83,7 +84,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         List<Article> results = articleViewModel.searchResultArticles(searchText);
         RecyclerView recyclerView = findViewById(R.id.search_result_recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         ArticlesAdapter articlesAdapter = new ArticlesAdapter(this, articleViewModel);
         articlesAdapter.setArticles(results);
         recyclerView.setAdapter(articlesAdapter);
