@@ -11,27 +11,30 @@ import java.util.concurrent.ExecutionException;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.paging.PagedList;
 
 public class ArticleViewModel extends AndroidViewModel {
 
     private final ArticleRepository articleRepository;
-    private LiveData<List<Article>> allArticles;
+    private LiveData<PagedList<Article>> allArticles;
+    private LiveData<List<Article>> favoriteArticles;
 
     public ArticleViewModel(@NonNull Application application) {
         super(application);
         articleRepository = new ArticleRepository(application);
+        favoriteArticles = articleRepository.getFavoriteArticles();
         allArticles = articleRepository.getAllArticles();
     }
 
-    public LiveData<List<Article>> getAllArticles() {
+    public LiveData<PagedList<Article>> getAllArticles() {
         return allArticles;
     }
 
-    public LiveData<List<Article>> getCategoryArticles(String categoryName) {
+    public LiveData<PagedList<Article>> getCategoryArticles(String categoryName) {
         return articleRepository.getCategoryArticles(categoryName);
     }
 
-    public LiveData<List<Article>> getWebsiteArticles(String websiteName) {
+    public LiveData<PagedList<Article>> getWebsiteArticles(String websiteName) {
         return articleRepository.getWebsiteArticles(websiteName);
     }
 
@@ -43,7 +46,7 @@ public class ArticleViewModel extends AndroidViewModel {
         articleRepository.updateReadStatus(articleId, isRead);
     }
 
-    public List<Article> searchResultArticles(String searchQuery) throws ExecutionException, InterruptedException {
+    public LiveData<PagedList<Article>> searchResultArticles(String searchQuery) {
         return articleRepository.searchResultArticles(searchQuery);
     }
 
@@ -51,8 +54,8 @@ public class ArticleViewModel extends AndroidViewModel {
         articleRepository.updateFavoriteStatus(articleId, isFavorite);
     }
 
-    public LiveData<List<Article>> getFavoriteArticles() throws ExecutionException, InterruptedException {
-        return articleRepository.getFavoriteArticles();
+    public LiveData<List<Article>> getFavoriteArticles() {
+        return favoriteArticles;
     }
 
     public LiveData<Integer> getCountOfCategoryUnreadArticles(String categoryName) {

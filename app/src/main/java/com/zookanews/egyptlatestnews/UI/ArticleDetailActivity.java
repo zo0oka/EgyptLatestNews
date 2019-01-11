@@ -20,6 +20,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zookanews.egyptlatestnews.Helpers.Constants;
 import com.zookanews.egyptlatestnews.R;
+import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
@@ -46,12 +47,12 @@ public class ArticleDetailActivity extends AppCompatActivity {
         articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
         try {
             article = articleViewModel.getArticleById(receivedArticleId);
-            articleViewModel.updateReadStatus(receivedArticleId, true);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        articleViewModel.updateReadStatus(receivedArticleId, true);
         setTitle(article.getArticleTitle());
         TextView articleTitle = findViewById(R.id.article_title_text_view);
         assert article != null;
@@ -126,6 +127,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         mAdView.destroy();
+        FeedRoomDatabase.destroyInstance();
         super.onDestroy();
     }
 

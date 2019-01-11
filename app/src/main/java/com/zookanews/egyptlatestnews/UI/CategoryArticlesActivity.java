@@ -15,20 +15,20 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.zookanews.egyptlatestnews.Helpers.Constants;
 import com.zookanews.egyptlatestnews.R;
+import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Category;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.CategoryViewModel;
 import com.zookanews.egyptlatestnews.UpdateService.DbUpdateService;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -79,10 +79,10 @@ public class CategoryArticlesActivity extends AppCompatActivity {
         articlesAdapter = new ArticlesAdapter(this, articleViewModel);
         recyclerView.setAdapter(articlesAdapter);
 
-        articleViewModel.getCategoryArticles(categoryName).observe(this, new Observer<List<Article>>() {
+        articleViewModel.getCategoryArticles(categoryName).observe(this, new Observer<PagedList<Article>>() {
             @Override
-            public void onChanged(@Nullable List<Article> articles) {
-                articlesAdapter.setArticles(articles);
+            public void onChanged(PagedList<Article> articles) {
+                articlesAdapter.submitList(articles);
             }
         });
         try {
@@ -136,6 +136,7 @@ public class CategoryArticlesActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         mAdView.destroy();
+        FeedRoomDatabase.destroyInstance();
         super.onDestroy();
     }
 

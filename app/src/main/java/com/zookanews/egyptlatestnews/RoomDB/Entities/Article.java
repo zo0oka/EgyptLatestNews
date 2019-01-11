@@ -3,6 +3,7 @@ package com.zookanews.egyptlatestnews.RoomDB.Entities;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -156,4 +157,16 @@ public class Article {
                 + "Category: " + categoryName + "\n"
                 + "Read: " + isRead + ".";
     }
+
+    public static final DiffUtil.ItemCallback<Article> DIFF_CALLBACK = new DiffUtil.ItemCallback<Article>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Article oldItem, @NonNull Article newItem) {
+            return oldItem.getArticleId() == newItem.getArticleId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Article oldItem, @NonNull Article newItem) {
+            return oldItem.getArticleLink().equals(newItem.getArticleLink());
+        }
+    };
 }

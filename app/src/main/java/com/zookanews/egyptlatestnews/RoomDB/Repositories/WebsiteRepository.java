@@ -1,5 +1,6 @@
 package com.zookanews.egyptlatestnews.RoomDB.Repositories;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.AsyncTask;
 
@@ -18,20 +19,13 @@ public class WebsiteRepository {
         websiteDao = db.websiteDao();
     }
 
-    public Website getWebsiteByName(String websiteName) throws ExecutionException, InterruptedException {
-        return new getWebsiteByNameAsyncTask(websiteDao).execute(websiteName).get();
-    }
-
-    private static class getWebsiteByNameAsyncTask extends AsyncTask<String, Void, Website> {
-        private WebsiteDao asyncTaskDao;
-
-        getWebsiteByNameAsyncTask(WebsiteDao websiteDao) {
-            asyncTaskDao = websiteDao;
-        }
-
-        @Override
-        protected Website doInBackground(String... strings) {
-            return asyncTaskDao.getWebsiteByName(strings[0]);
-        }
+    @SuppressLint("StaticFieldLeak")
+    public Website getWebsiteByName(final String websiteName) throws ExecutionException, InterruptedException {
+        return new AsyncTask<String, Void, Website>() {
+            @Override
+            protected Website doInBackground(String... strings) {
+                return websiteDao.getWebsiteByName(strings[0]);
+            }
+        }.execute(websiteName).get();
     }
 }

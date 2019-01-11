@@ -4,10 +4,10 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.zookanews.egyptlatestnews"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,10 +20,8 @@ android {
 }
 
 dependencies {
-    def paging_version = "2.1.0-rc01"
-
-    implementation "androidx.paging:paging-runtime:$paging_version"
-    testImplementation "androidx.paging:paging-common:$paging_version"
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation "androidx.paging:paging-runtime:2.1.0-rc01"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'com.google.android.material:material:1.1.0-alpha02'
@@ -37,10 +35,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:17.1.2'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation "androidx.room:room-testing:2.1.0-alpha03"
     annotationProcessor "androidx.room:room-compiler:2.1.0-alpha03"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.1.0-alpha01"
 }

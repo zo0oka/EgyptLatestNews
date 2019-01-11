@@ -15,20 +15,20 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.zookanews.egyptlatestnews.Helpers.Constants;
 import com.zookanews.egyptlatestnews.R;
+import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Website;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.WebsiteViewModel;
 import com.zookanews.egyptlatestnews.UpdateService.DbUpdateService;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -79,21 +79,23 @@ public class WebsiteArticlesActivity extends AppCompatActivity {
         articlesAdapter = new ArticlesAdapter(this, articleViewModel);
         recyclerView.setAdapter(articlesAdapter);
 
-        articleViewModel.getWebsiteArticles(websiteName).observe(this, new Observer<List<Article>>() {
+        articleViewModel.getWebsiteArticles(websiteName).observe(this, new Observer<PagedList<Article>>() {
             @Override
-            public void onChanged(@Nullable List<Article> articles) {
-                articlesAdapter.setArticles(articles);
+            public void onChanged(PagedList<Article> articles) {
+                articlesAdapter.submitList(articles);
             }
         });
+        Website website = null;
         try {
-            Website website = websiteViewModel.getWebsiteByName(websiteName);
-            setTitle(website.getWebsiteTitle());
+            website = websiteViewModel.getWebsiteByName(websiteName);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        if (website != null) {
+            setTitle(website.getWebsiteTitle());
+        }
         loadAd();
 
     }
@@ -129,6 +131,7 @@ public class WebsiteArticlesActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         mAdView.destroy();
+        FeedRoomDatabase.destroyInstance();
         super.onDestroy();
     }
 

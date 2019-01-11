@@ -11,14 +11,13 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.zookanews.egyptlatestnews.Helpers.Constants;
 import com.zookanews.egyptlatestnews.R;
+import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
@@ -29,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class FavoriteArticlesActivity extends AppCompatActivity {
 
-    private ArticlesAdapter articlesAdapter;
+    private FavoriteArticlesAdapter favoriteArticlesAdapter;
     private AdView mAdView;
 
     @Override
@@ -43,21 +42,15 @@ public class FavoriteArticlesActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.favorite_articles_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        articlesAdapter = new ArticlesAdapter(this, articleViewModel);
-        recyclerView.setAdapter(articlesAdapter);
+        favoriteArticlesAdapter = new FavoriteArticlesAdapter(this, articleViewModel);
+        recyclerView.setAdapter(favoriteArticlesAdapter);
 
-        try {
-            articleViewModel.getFavoriteArticles().observe(this, new Observer<List<Article>>() {
-                @Override
-                public void onChanged(@Nullable List<Article> articles) {
-                    articlesAdapter.setArticles(articles);
-                }
-            });
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        articleViewModel.getFavoriteArticles().observe(this, new Observer<List<Article>>() {
+            @Override
+            public void onChanged(List<Article> articles) {
+                favoriteArticlesAdapter.setArticles(articles);
+            }
+        });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -69,7 +62,7 @@ public class FavoriteArticlesActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 int position = viewHolder.getAdapterPosition();
-                Article article = articlesAdapter.getArticleAtPosition(position);
+                Article article = favoriteArticlesAdapter.getArticleAt(position);
                 articleViewModel.updateFavoriteStatus(article.getArticleId(), false);
             }
         });
@@ -101,6 +94,7 @@ public class FavoriteArticlesActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         mAdView.destroy();
+        FeedRoomDatabase.destroyInstance();
         super.onDestroy();
     }
 

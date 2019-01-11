@@ -1,7 +1,9 @@
 package com.zookanews.egyptlatestnews.WorkManager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.zookanews.egyptlatestnews.Helpers.Constants;
@@ -27,8 +29,15 @@ public class DeleteReadArticlesWorker extends Worker {
         return Result.success();
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void deleteReadArticles(int noOfDays) {
-        ArticleDao articleDao = FeedRoomDatabase.getDatabase(getApplicationContext()).articleDao();
-        articleDao.deleteReadArticlesOlderThan(noOfDays);
+        final ArticleDao articleDao = FeedRoomDatabase.getDatabase(getApplicationContext()).articleDao();
+        new AsyncTask<Integer, Void, Void>() {
+            @Override
+            protected Void doInBackground(Integer... integers) {
+                articleDao.deleteReadArticlesOlderThan(integers[0]);
+                return null;
+            }
+        }.execute(noOfDays);
     }
 }

@@ -69,5 +69,10 @@
     <string name="favorite">Favorite</string>
     <string name="favorite_icon">Favorite icon</string>
     <string name="nav_favorites">الاخبار المفضلة</string>
+
+
     <string name="admob_banner_adunit_id">ca-app-pub-4040319527918836/3247703038</string>
+    <string name="facebook_app_id">277320703137038</string>
+
+
 </resources>

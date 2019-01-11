@@ -26,7 +26,6 @@ import com.zookanews.egyptlatestnews.WorkManager.DBSyncWorker;
 import com.zookanews.egyptlatestnews.WorkManager.DeleteReadArticlesWorker;
 import com.zookanews.egyptlatestnews.WorkManager.DeleteUnreadArticlesWorker;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
@@ -39,6 +38,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,24 +79,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTheme(R.style.AppTheme);
         initializeViews();
         initializeViewModels();
         setupRecyclerView();
+        loadAd();
 
-        articleViewModel.getAllArticles().observe(this, new Observer<List<Article>>() {
+        articleViewModel.getAllArticles().observe(this, new Observer<PagedList<Article>>() {
             @Override
-            public void onChanged(@Nullable List<Article> articles) {
-                articlesAdapter.setArticles(articles);
+            public void onChanged(@Nullable PagedList<Article> articles) {
+                articlesAdapter.submitList(articles);
             }
         });
+
         setCategoryCounters();
         setWebsiteCounters();
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert notificationManager != null;
         notificationManager.cancelAll();
-
-        loadAd();
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -255,11 +256,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAdView.resume();
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        mAdView.resume();
-    }
 
     @Override
     public void onBackPressed() {
@@ -287,10 +283,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         final int id = item.getItemId();
 
         if (id == R.id.nav_latest_news) {
-            articleViewModel.getAllArticles().observe(this, new Observer<List<Article>>() {
+            articleViewModel.getAllArticles().observe(this, new Observer<PagedList<Article>>() {
                 @Override
-                public void onChanged(@Nullable List<Article> articles) {
-                    articlesAdapter.setArticles(articles);
+                public void onChanged(@Nullable PagedList<Article> articles) {
+                    articlesAdapter.submitList(articles);
                 }
             });
         } else if (id == R.id.nav_politics) {
@@ -378,8 +374,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onDestroy() {
-        FeedRoomDatabase.destroyInstance();
         mAdView.destroy();
+        FeedRoomDatabase.destroyInstance();
         super.onDestroy();
     }
 
@@ -387,5 +383,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onPause() {
         mAdView.pause();
         super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        mAdView.resume();
+        super.onRestart();
+
     }
 }

@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
@@ -50,22 +51,22 @@ public class ArticleWebViewActivity extends AppCompatActivity {
         });
 
         setWebViewSettings();
+        loadUrlInWebView();
+        setTitle(article.getArticleTitle());
+
+    }
+
+    private void loadUrlInWebView() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int articleId = sharedPreferences.getInt("article_id", 0);
+        ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
         try {
-            loadUrlInWebView();
+            article = articleViewModel.getArticleById(articleId);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        setTitle(article.getArticleTitle());
-
-    }
-
-    private void loadUrlInWebView() throws ExecutionException, InterruptedException {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        int articleId = sharedPreferences.getInt("article_id", 0);
-        ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
-        article = articleViewModel.getArticleById(articleId);
         String url = article.getArticleLink();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             webView.getWebChromeClient();
@@ -100,5 +101,11 @@ public class ArticleWebViewActivity extends AppCompatActivity {
             mInterstitialAd.show();
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        FeedRoomDatabase.destroyInstance();
+        super.onDestroy();
     }
 }

@@ -1,5 +1,6 @@
 package com.zookanews.egyptlatestnews.RoomDB.Repositories;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.AsyncTask;
 
@@ -18,20 +19,13 @@ public class CategoryRepository {
         categoryDao = db.categoryDao();
     }
 
-    public Category getCategoryByName(String categoryName) throws ExecutionException, InterruptedException {
-        return new getCategoryByNameAsyncTask(categoryDao).execute(categoryName).get();
-    }
-
-    private static class getCategoryByNameAsyncTask extends AsyncTask<String, Void, Category> {
-        private CategoryDao asyncTaskDao;
-
-        getCategoryByNameAsyncTask(CategoryDao categoryDao) {
-            asyncTaskDao = categoryDao;
-        }
-
-        @Override
-        protected Category doInBackground(String... strings) {
-            return asyncTaskDao.getCategoryByName(strings[0]);
-        }
+    @SuppressLint("StaticFieldLeak")
+    public Category getCategoryByName(final String categoryName) throws ExecutionException, InterruptedException {
+        return new AsyncTask<String, Void, Category>() {
+            @Override
+            protected Category doInBackground(String... strings) {
+                return categoryDao.getCategoryByName(strings[0]);
+            }
+        }.execute(categoryName).get();
     }
 }

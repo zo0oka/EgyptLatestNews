@@ -13,15 +13,15 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.zookanews.egyptlatestnews.R;
+import com.zookanews.egyptlatestnews.RoomDB.DB.FeedRoomDatabase;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,26 +68,24 @@ public class SearchResultsActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String searchQuery = intent.getStringExtra(SearchManager.QUERY);
-            try {
-                searchDB(searchQuery);
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            searchDB(searchQuery);
         }
     }
 
-    private void searchDB(String searchQuery) throws ExecutionException, InterruptedException {
+    private void searchDB(String searchQuery) {
         String searchText = "%" + searchQuery + "%";
         ArticleViewModel articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
-        List<Article> results = articleViewModel.searchResultArticles(searchText);
         RecyclerView recyclerView = findViewById(R.id.search_result_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        ArticlesAdapter articlesAdapter = new ArticlesAdapter(this, articleViewModel);
-        articlesAdapter.setArticles(results);
+        final ArticlesAdapter articlesAdapter = new ArticlesAdapter(this, articleViewModel);
         recyclerView.setAdapter(articlesAdapter);
+        articleViewModel.searchResultArticles(searchText).observe(this, new Observer<PagedList<Article>>() {
+            @Override
+            public void onChanged(PagedList<Article> articles) {
+                articlesAdapter.submitList(articles);
+            }
+        });
         setTitle("Search Results for: " + searchQuery);
     }
 
@@ -105,6 +103,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         mAdView.destroy();
+        FeedRoomDatabase.destroyInstance();
         super.onDestroy();
     }
 
