@@ -14,6 +14,10 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -25,10 +29,6 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.ViewModels.ArticleViewModel;
 
 import java.util.concurrent.ExecutionException;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.lifecycle.ViewModelProviders;
 
 public class ArticleDetailActivity extends AppCompatActivity {
 
@@ -76,7 +76,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, article.getArticleTitle());
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, article.getArticleDescription());
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, article.getArticleDescription() + "\n" + article.getArticleLink());
                 sharingIntent.putExtra(Intent.EXTRA_TITLE, article.getArticleTitle());
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
             }

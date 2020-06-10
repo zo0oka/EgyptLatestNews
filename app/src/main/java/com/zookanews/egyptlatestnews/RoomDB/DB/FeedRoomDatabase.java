@@ -3,6 +3,13 @@ package com.zookanews.egyptlatestnews.RoomDB.DB;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
 import com.zookanews.egyptlatestnews.Parser.SaxXmlParser;
 import com.zookanews.egyptlatestnews.RoomDB.DAO.ArticleDao;
 import com.zookanews.egyptlatestnews.RoomDB.DAO.CategoryDao;
@@ -12,13 +19,6 @@ import com.zookanews.egyptlatestnews.RoomDB.Entities.Article;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Category;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Feed;
 import com.zookanews.egyptlatestnews.RoomDB.Entities.Website;
-
-import androidx.annotation.NonNull;
-import androidx.room.Database;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Article.class, Category.class, Feed.class, Website.class}, version = 1, exportSchema = false)
 @TypeConverters(DateConverter.class)
@@ -84,9 +84,11 @@ public abstract class FeedRoomDatabase extends RoomDatabase {
             for (Category category : DBStartupData.categories) {
                 categoryDao.insertCategory(category);
             }
+
             for (Website website : DBStartupData.websites) {
                 websiteDao.insertWebsite(website);
             }
+
             for (Feed feed : DBStartupData.feeds) {
                 feedDao.insertFeed(feed);
                 for (Article article : SaxXmlParser.parse(feed.getFeedRssLink())) {
